@@ -6,7 +6,7 @@ public class MainClass {
 	
 	public static void main(String[] args) throws Exception {
 		
-		String apiFile = "F:\\apikey.txt";
+		String apiFile = "F:\\workspace\\apikey.txt";
 		String apiKey = null;
 		
 
