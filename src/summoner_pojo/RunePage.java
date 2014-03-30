@@ -1,4 +1,4 @@
-package api_category;
+package summoner_pojo;
 
 import java.util.List;
 

@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.Map;
 
 import summoner_pojo.MasteryPages;
+import summoner_pojo.RunePages;
 import summoner_pojo.SummonersBy;
 
 import com.google.gson.Gson;
