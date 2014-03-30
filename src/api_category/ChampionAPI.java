@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.List;
 
 import pojo_champion.Champion;
-import pojo_summoner.Champions;
+import pojo_champion.Champions;
 
 import com.google.gson.Gson;
 
