@@ -1,5 +1,6 @@
+package api_pojo;
 
-public class SummonerNames {
+public class SummonerByName {
 	
 	public long id;	// Summoner ID.
 	public String name; // Summoner name.
