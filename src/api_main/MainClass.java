@@ -1,6 +1,7 @@
 package api_main;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Map;
 
 import api_category.SummonerAPI;
 import api_pojo.SummonerByName;
@@ -26,8 +27,9 @@ public class MainClass {
 		String apiVersion = "1.3";
 
 		SummonerAPI summAPI = new SummonerAPI(staticData, region, apiVersion);		
-		SummonerByName newSumm = summAPI.getSummonerByName(protocol, baseURL, urlSuffix, "g00fy2");
-		System.out.println(newSumm.name);
+		Map<String, SummonerByName> summMap = summAPI.getSummonerByName(protocol, baseURL, urlSuffix, "g00fy2,g00fy");
+		
+		System.out.println(summMap.get("g00fy2").name);
 	}
 
 

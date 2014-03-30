@@ -23,13 +23,13 @@ public class SummonerAPI {
 		this.apiVersion = apiVersion;
 	}
 
-		public SummonerByName getSummonerByName(String protocol, String baseURL, String urlSuffix, String summonerName) throws Exception{			
+		public Map<String, SummonerByName> getSummonerByName(String protocol, String baseURL, String urlSuffix, String summonerName) throws Exception{			
 		
+		// sets the base URL with variables from class
 		baseURL = replaceURL(protocol, baseURL);
 		String url = baseURL+"/by-name/"+summonerName+urlSuffix;
 
 		URL obj = new URL(url);
-		System.out.println(url);
 		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
  
@@ -40,11 +40,11 @@ public class SummonerAPI {
 		Gson gson = new Gson();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		//System.out.println(reader.readLine());
-		Map<String, SummonerByName>  newSummoner = gson.fromJson(reader, new TypeToken<Map<String, SummonerByName>>(){}.getType());
+		Map<String, SummonerByName>  newSummoners = gson.fromJson(reader, new TypeToken<Map<String, SummonerByName>>(){}.getType());
+		reader.close(); // close BufferedReader AND InputStreamReader
+		conn.disconnect();
 		
-		System.out.println("ID: "+newSummoner.get(summonerName).id);
-		
-		return newSummoner.get(summonerName);
+		return newSummoners;
 		}
 		
 		
