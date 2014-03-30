@@ -2,7 +2,7 @@ package api_main;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import api_categories.SummonerAPI;
+import api_category.SummonerAPI;
 import api_pojo.SummonerByName;
 
 

@@ -1,4 +1,4 @@
-package api_categories;
+package api_category;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
