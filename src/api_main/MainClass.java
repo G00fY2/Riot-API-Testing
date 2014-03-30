@@ -3,8 +3,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Map;
 
+import summoner_pojo.MasteryPages;
+import summoner_pojo.SummonersBy;
+import api_category.RunePages;
 import api_category.SummonerAPI;
-import api_pojo.SummonersBy;
 
 
 public class MainClass {
@@ -27,11 +29,13 @@ public class MainClass {
 		String apiVersion = "1.3";
 
 		SummonerAPI summAPI = new SummonerAPI(staticData, region, apiVersion);		
-		Map<Integer, SummonersBy> summByID = summAPI.getSummonersByIDs(protocol, baseURL, urlSuffix, "30509866");
+		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries(protocol, baseURL, urlSuffix, "30509866");
+		Map<String, RunePages> summRunes = summAPI.getSummonersRunes(protocol, baseURL, urlSuffix, "30509866");
 		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames(protocol, baseURL, urlSuffix, "kingkalle22");
 		
-		System.out.println(summByID.get(30509866).name);
+		System.out.println(summMasteries.get("30509866").pages.get(0).id);
 		System.out.println(summByName.get("kingkalle22").id);
+		System.out.println(summRunes.get("30509866").pages.get(0).slots.get(0).rune.description);
 	}
 
 

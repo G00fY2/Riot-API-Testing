@@ -1,4 +1,4 @@
-package api_pojo;
+package summoner_pojo;
 
 public class SummonersBy {
 	
