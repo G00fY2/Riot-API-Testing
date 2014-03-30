@@ -6,21 +6,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-import summoner_pojo.MasteryPages;
-import summoner_pojo.RunePages;
-import summoner_pojo.SummonersBy;
+import pojo_summoner.MasteryPages;
+import pojo_summoner.RunePages;
+import pojo_summoner.SummonersBy;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class SummonerAPI {
 	
-	private String staticData;
 	private String region;
 	private String apiVersion;
 	
-	public SummonerAPI(String staticData, String region, String apiVersion){
-		this.staticData = staticData;
+	public SummonerAPI(String region, String apiVersion){
 		this.region = region;
 		this.apiVersion = apiVersion;
 	}
@@ -110,7 +108,7 @@ public class SummonerAPI {
 		// sets the base URL with variables from class
 		baseURL = replaceURL(protocol, baseURL);
 		String url = baseURL+"/"+summonerIDs+"/masteries"+urlSuffix;
-		System.out.println(url);
+
 		URL obj = new URL(url);
 		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
@@ -136,7 +134,7 @@ public class SummonerAPI {
 		// sets the base URL with variables from class
 		baseURL = replaceURL(protocol, baseURL);
 		String url = baseURL+"/"+summonerIDs+"/runes"+urlSuffix;
-		System.out.println(url);
+
 		URL obj = new URL(url);
 		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
@@ -158,11 +156,9 @@ public class SummonerAPI {
 		
 		// function to build the final url
 		private String replaceURL(String protocol, String baseURL){
-			baseURL = baseURL.replace("{staticData}",staticData);
 			baseURL = baseURL.replace("{region}",region);
 			baseURL = baseURL.replace("{apiVersion}","v"+apiVersion);
 			baseURL = baseURL.replace("{category}","summoner");
-			baseURL = baseURL.replace("//","/");
 			baseURL = protocol+baseURL;		
 			return baseURL;
 		}

@@ -1,12 +1,12 @@
-package summoner_pojo;
+package pojo_summoner;
 
 import java.util.List;
 
-public class MasteryPage {
+public class RunePage {
 	
 	public Boolean current;
 	public long id;
 	public String name;
-	public List<Talents> talents;
-	
+	public List<RuneSlot> slots;
+
 }
