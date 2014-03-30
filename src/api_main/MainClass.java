@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.util.Map;
 
 import api_category.SummonerAPI;
-import api_pojo.SummonerByName;
+import api_pojo.SummonersBy;
 
 
 public class MainClass {
@@ -13,7 +13,7 @@ public class MainClass {
 		
 		String apiFile = "F:\\workspace\\apikey.txt";
 		String apiKey = null;
-		@SuppressWarnings("resource")
+		
 		// read API Key from first line of local textfile (temporary solution)
 		BufferedReader br = new BufferedReader(new FileReader(apiFile));
 		apiKey = br.readLine();
@@ -27,9 +27,11 @@ public class MainClass {
 		String apiVersion = "1.3";
 
 		SummonerAPI summAPI = new SummonerAPI(staticData, region, apiVersion);		
-		Map<String, SummonerByName> summMap = summAPI.getSummonerByName(protocol, baseURL, urlSuffix, "g00fy2,g00fy");
+		Map<Integer, SummonersBy> summByID = summAPI.getSummonersByIDs(protocol, baseURL, urlSuffix, "30509866");
+		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames(protocol, baseURL, urlSuffix, "kingkalle22");
 		
-		System.out.println(summMap.get("g00fy2").name);
+		System.out.println(summByID.get(30509866).name);
+		System.out.println(summByName.get("kingkalle22").id);
 	}
 
 
