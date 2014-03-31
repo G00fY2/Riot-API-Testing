@@ -1,10 +1,10 @@
 package pojo_summoner;
 
-import java.util.List;
+import java.util.Set;
 
 public class MasteryPages {
 	
 	public long summonerId;
-	public List<MasteryPage> pages;
+	public Set<MasteryPage> pages;
 
 }

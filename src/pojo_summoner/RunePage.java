@@ -1,12 +1,12 @@
 package pojo_summoner;
 
-import java.util.List;
+import java.util.Set;
 
 public class RunePage {
 	
 	public Boolean current;
 	public long id;
 	public String name;
-	public List<RuneSlot> slots;
+	public Set<RuneSlot> slots;
 
 }

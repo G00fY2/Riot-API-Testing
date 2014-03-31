@@ -1,10 +1,10 @@
 package pojo_summoner;
 
-import java.util.List;
+import java.util.Set;
 
 public class RunePages {
 	
 	public long summonerId;
-	public List<RunePage> pages;
+	public Set<RunePage> pages;
 
 }
