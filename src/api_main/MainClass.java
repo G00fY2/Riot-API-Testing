@@ -18,7 +18,7 @@ public class MainClass {
 	public static void main(String[] args) throws Exception {
 		
 		String apiFile = "F:\\workspace\\apikey.txt";
-		String apiKey = null;
+		String apiKey = "";
 		
 		// read API Key from first line of local textfile (temporary solution)
 		BufferedReader br = new BufferedReader(new FileReader(apiFile));
@@ -29,21 +29,21 @@ public class MainClass {
 		String baseURL = "prod.api.pvp.net/api/lol/{region}/{apiVersion}/{category}";
 		String urlSuffix = "?api_key="+apiKey;
 		String region = "euw";
-		String apiVersion = "1.3";
-		//TODO: one GsonBuilder per API
-		SummonerAPI summAPI = new SummonerAPI(region, apiVersion);		
-		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries(protocol, baseURL, urlSuffix, "30509866");
-		Map<String, RunePages> summRunes = summAPI.getSummonersRunes(protocol, baseURL, urlSuffix, "30509866");
-		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames(protocol, baseURL, urlSuffix, "kingkalle22");
+		String apiVersionSumm = "1.3";
+		String apiVersionChamp = "1.1";
+
+		SummonerAPI summAPI = new SummonerAPI(protocol, baseURL, urlSuffix, region, apiVersionSumm);
+		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("g00fy2");
+		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries("22573844");
+		Map<String, RunePages> summRunes = summAPI.getSummonersRunes("22573844");
 		
-		apiVersion = "1.1";
-		ChampionAPI champAPI = new ChampionAPI(region, apiVersion);
-		List<Champion> champions = champAPI.getChampions(protocol, baseURL, urlSuffix);
+		ChampionAPI champAPI = new ChampionAPI(protocol, baseURL, urlSuffix, region, apiVersionChamp);
+		List<Champion> champions = champAPI.getChampions();
 			
 		// just some test output
-		System.out.println(summMasteries.get("30509866").pages.get(0).id);
-		System.out.println(summByName.get("kingkalle22").id);
-		System.out.println(summRunes.get("30509866").pages.get(0).slots.get(0).rune.description);
+		System.out.println(summByName.get("g00fy2").id);
+		System.out.println(summMasteries.get("22573844").pages.get(0).name);
+		System.out.println(summRunes.get("22573844").pages.get(0).slots.get(0).rune.description);
 		System.out.println(champions.get(0).name);
 	}
 

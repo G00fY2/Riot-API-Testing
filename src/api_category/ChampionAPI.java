@@ -13,19 +13,22 @@ import com.google.gson.Gson;
 
 public class ChampionAPI {
 	
-	private String region;
-	private String apiVersion;
+	private String baseURL;
+	private String urlSuffix;
+	private Gson gson;
 	
-	public ChampionAPI(String region, String apiVersion){
-		this.region = region;
-		this.apiVersion = apiVersion;
+	public ChampionAPI(String protocol, String baseURL, String urlSuffix, String region, String apiVersion){
+		this.baseURL = baseURL.replace("{region}",region);
+		this.baseURL = this.baseURL.replace("{apiVersion}","v"+apiVersion);
+		this.baseURL = this.baseURL.replace("{category}","champion");
+		this.baseURL = protocol+this.baseURL;
+		this.urlSuffix = urlSuffix;
+		gson = new Gson();
 	}
-	
-		// return a object List with all champions
-		public List<Champion> getChampions(String protocol, String baseURL, String urlSuffix) throws Exception{			
 		
-		// sets the base URL with variables from class
-		baseURL = replaceURL(protocol, baseURL);
+		// return a object List with all champions
+		public List<Champion> getChampions() throws Exception{			
+		
 		String url = baseURL+urlSuffix;
 
 		URL obj = new URL(url);
@@ -36,7 +39,6 @@ public class ChampionAPI {
 		System.out.println("Sending 'GET' request to URL : " + url);
 		System.out.println("Response Code : " + responseCode);
 		
-		Gson gson = new Gson();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		//System.out.println(reader.readLine());
 		Champions champions = gson.fromJson(reader, Champions.class);
@@ -45,13 +47,5 @@ public class ChampionAPI {
 		
 		return champions.champions;
 		}
-		
-		// function to build the final url
-		private String replaceURL(String protocol, String baseURL){
-			baseURL = baseURL.replace("{region}",region);
-			baseURL = baseURL.replace("{apiVersion}","v"+apiVersion);
-			baseURL = baseURL.replace("{category}","champion");
-			baseURL = protocol+baseURL;		
-			return baseURL;
-		}
+
 }
