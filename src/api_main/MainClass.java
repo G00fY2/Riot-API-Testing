@@ -4,16 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import pojo_champion.Champion;
-import pojo_summoner.MasteryPage;
-import pojo_summoner.MasteryPages;
-import pojo_summoner.RunePage;
-import pojo_summoner.RunePages;
-import pojo_summoner.RuneSlot;
-import pojo_summoner.SummonersBy;
-import api_category.ChampionAPI;
-import api_category.SummonerAPI;
+import pojo_champion.*;
+import pojo_game.*;
+import pojo_summoner.*;
+import api_category.*;
 
 
 public class MainClass {
@@ -34,6 +30,7 @@ public class MainClass {
 		String region = "euw";
 		String apiVersionSumm = "1.3";
 		String apiVersionChamp = "1.1";
+		String apiVersionGame = "1.3";
 		
 		
 		// test summoner API
@@ -49,22 +46,19 @@ public class MainClass {
 		
 		// just some test output
 		System.out.println(summByName.get("g00fy2").id);
-		// iterate through MasteryPages
-		for(MasteryPage page : summMasteries.get("22573844").pages){
-			   System.out.println(page.talents.get(0).name);
-			   break;
-		}
+		// MasteryPages
+		 System.out.println(summMasteries.get("22573844").pages.iterator().next().name);
 		// iterate through RunePages
 		for(RunePage page : summRunes.get("22573844").pages){
-			for(RuneSlot slot : page.slots){
-				   System.out.println(slot.rune.description);
-				   break;
-			}   
+			System.out.println(page.slots.iterator().next().rune.description);
 			break;
 		}
 		System.out.println(champions.get(0).name);
+		
+		// test game API
+		GameAPI gameAPI = new GameAPI(protocol, baseURL, urlSuffix, region, apiVersionGame);
+		Set<Game> games = gameAPI.getGames(22573844);
+		System.out.println(games.iterator().next().stats.level);
 	}
-
-
 
 }
