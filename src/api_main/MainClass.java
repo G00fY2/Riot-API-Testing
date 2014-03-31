@@ -32,37 +32,44 @@ public class MainClass {
 		String apiVersionChamp = "1.1";
 		String apiVersionGame = "1.3";
 		
-		
-		// test summoner API
+		/* 
+		 * test summoner API
+		 * */
 		SummonerAPI summAPI = new SummonerAPI(protocol, baseURL, urlSuffix, region, apiVersionSumm);
+
 		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("g00fy2");
-		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries("22573844");
-		Map<String, RunePages> summRunes = summAPI.getSummonersRunes("22573844");
-		
-		// test champion API
-		ChampionAPI champAPI = new ChampionAPI(protocol, baseURL, urlSuffix, region, apiVersionChamp);
-		List<Champion> champions = champAPI.getChampions();
-		
-		ChampionAPIJackson champAPIJack = new ChampionAPIJackson(protocol, baseURL, urlSuffix, region, apiVersionChamp);
-		List<Champion> championsJack = champAPIJack.getJackChampions();
-			
-		
-		// just some test output
 		System.out.println(summByName.get("g00fy2").id);
+		System.out.println("- - - - - - - - - -");
 		// MasteryPages
-		 System.out.println(summMasteries.get("22573844").pages.iterator().next().name);
+		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries("22573844");
+		System.out.println(summMasteries.get("22573844").pages.iterator().next().name);
+		System.out.println("- - - - - - - - - -");
+		Map<String, RunePages> summRunes = summAPI.getSummonersRunes("22573844");
 		// iterate through RunePages
 		for(RunePage page : summRunes.get("22573844").pages){
 			System.out.println(page.slots.iterator().next().rune.description);
+			System.out.println("- - - - - - - - - -");
 			break;
-		}
+		}	
+		/*
+		 * test champion API
+		 */
+		ChampionAPI champAPI = new ChampionAPI(protocol, baseURL, urlSuffix, region, apiVersionChamp);	
+		List<Champion> champions = champAPI.getChampions();
 		System.out.println(champions.get(0).name);
+		System.out.println("- - - - - - - - - -");
+		// test champion API with Jackson parser
+		ChampionAPIJackson champAPIJack = new ChampionAPIJackson(protocol, baseURL, urlSuffix, region, apiVersionChamp);
+		List<Champion> championsJack = champAPIJack.getJackChampions();
 		System.out.println(championsJack.get(1).name);
-		
-		// test game API
+		System.out.println("- - - - - - - - - -");
+		/*
+		 * test game API
+		 */
 		GameAPI gameAPI = new GameAPI(protocol, baseURL, urlSuffix, region, apiVersionGame);
 		Set<Game> games = gameAPI.getGames(22573844);
 		System.out.println(games.iterator().next().stats.level);
+		System.out.println("- - - - - - - - - -");
 	}
 
 }
