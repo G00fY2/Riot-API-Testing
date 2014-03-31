@@ -42,6 +42,9 @@ public class MainClass {
 		// test champion API
 		ChampionAPI champAPI = new ChampionAPI(protocol, baseURL, urlSuffix, region, apiVersionChamp);
 		List<Champion> champions = champAPI.getChampions();
+		
+		ChampionAPIJackson champAPIJack = new ChampionAPIJackson(protocol, baseURL, urlSuffix, region, apiVersionChamp);
+		List<Champion> championsJack = champAPIJack.getJackChampions();
 			
 		
 		// just some test output
@@ -54,6 +57,7 @@ public class MainClass {
 			break;
 		}
 		System.out.println(champions.get(0).name);
+		System.out.println(championsJack.get(1).name);
 		
 		// test game API
 		GameAPI gameAPI = new GameAPI(protocol, baseURL, urlSuffix, region, apiVersionGame);
