@@ -2,9 +2,10 @@ package api_category;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import pojo_summoner.MasteryPages;
 import pojo_summoner.RunePages;
@@ -34,7 +35,7 @@ public class SummonerAPI {
 		String url = baseURL+"/by-name/"+(summonerNames.toLowerCase())+urlSuffix;
 
 		URL obj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
  
 		int responseCode = conn.getResponseCode();
@@ -57,7 +58,7 @@ public class SummonerAPI {
 		String url = baseURL+"/"+summonerIDs+urlSuffix;
 
 		URL obj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
  
 		int responseCode = conn.getResponseCode();
@@ -80,7 +81,7 @@ public class SummonerAPI {
 		String url = baseURL+"/"+summonerIDs+urlSuffix;
 
 		URL obj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
  
 		int responseCode = conn.getResponseCode();
@@ -103,7 +104,7 @@ public class SummonerAPI {
 		String url = baseURL+"/"+summonerIDs+"/masteries"+urlSuffix;
 
 		URL obj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
  
 		int responseCode = conn.getResponseCode();
@@ -126,7 +127,7 @@ public class SummonerAPI {
 		String url = baseURL+"/"+summonerIDs+"/runes"+urlSuffix;
 
 		URL obj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
  
 		int responseCode = conn.getResponseCode();

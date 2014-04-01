@@ -2,9 +2,9 @@ package api_category;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Set;
+import javax.net.ssl.HttpsURLConnection;
 
 import pojo_game.Game;
 import pojo_game.Games;
@@ -32,7 +32,7 @@ public class GameAPI {
 		String url = baseURL.replace("{summonerId}", Long.toString(summonerID))+urlSuffix;
 
 		URL obj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
  
 		int responseCode = conn.getResponseCode();
