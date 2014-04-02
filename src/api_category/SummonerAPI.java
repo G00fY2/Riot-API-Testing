@@ -32,7 +32,7 @@ public class SummonerAPI {
 		// response object contains the summoner objects mapped by the standardized summoner name (lower case without spaces)
 		public Map<String, SummonersBy> getSummonersByNames(String summonerNames) throws Exception{			
 		
-		String url = baseURL+"/by-name/"+(summonerNames.toLowerCase())+urlSuffix;
+		String url = (baseURL+"/by-name/"+((summonerNames.toLowerCase()).replaceAll("\\s+",""))+urlSuffix);
 
 		URL obj = new URL(url);
 		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
