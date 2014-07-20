@@ -1,9 +1,8 @@
 package pojo_summoner;
 
-public class Talents {
+public class Mastery {
 	
 	public int id;
-	public String name;
 	public int rank;
 
 }

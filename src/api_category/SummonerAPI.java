@@ -29,7 +29,7 @@ public class SummonerAPI {
 		gson = new Gson();
 	}
 		
-		// response object contains the summoner objects mapped by the standardized summoner name (lower case without spaces)
+		// Get summoner objects mapped by standardized summoner name for a given list of summoner names
 		public Map<String, SummonersBy> getSummonersByNames(String summonerNames) throws Exception{			
 		
 		String url = (baseURL+"/by-name/"+((summonerNames.toLowerCase()).replaceAll("\\s+",""))+urlSuffix);
@@ -52,7 +52,7 @@ public class SummonerAPI {
 		}
 		
 		
-		// response object contains the summoner objects mapped by the summoner id
+		// Get summoner objects mapped by summoner ID for a given list of summoner IDs
 		public Map<Integer, SummonersBy> getSummonersByIDs(String summonerIDs) throws Exception{			
 			
 		String url = baseURL+"/"+summonerIDs+urlSuffix;
@@ -75,30 +75,7 @@ public class SummonerAPI {
 		}
 		
 		
-		// response object contains the summoner name mapped by the summoner id
-		public Map<Integer, String> getSummonersNames(String summonerIDs) throws Exception{			
-			
-		String url = baseURL+"/"+summonerIDs+urlSuffix;
-
-		URL obj = new URL(url);
-		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
-		conn.setRequestMethod("GET");
- 
-		int responseCode = conn.getResponseCode();
-		System.out.println("Sending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		//System.out.println(reader.readLine());
-		Map<Integer, String>  summoners = gson.fromJson(reader, new TypeToken<Map<Integer, String>>(){}.getType());
-		reader.close(); // close BufferedReader AND InputStreamReader
-		conn.disconnect();
-		
-		return summoners;
-		}
-		
-		
-		// response object contains the summoner matery pages mapped by the summoner id
+		// Get mastery pages mapped by summoner ID for a given list of summoner IDs
 		public Map<String, MasteryPages> getSummonersMasteries(String summonerIDs) throws Exception{			
 			
 		String url = baseURL+"/"+summonerIDs+"/masteries"+urlSuffix;
@@ -121,7 +98,30 @@ public class SummonerAPI {
 		}
 		
 		
-		// response object contains the summoner matery pages mapped by the summoner id
+		// Get summoner names mapped by summoner ID for a given list of summoner IDs
+		public Map<String, String> getSummonersNames(String summonerIDs) throws Exception{			
+			
+		String url = baseURL+"/"+summonerIDs+urlSuffix;
+
+		URL obj = new URL(url);
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
+		conn.setRequestMethod("GET");
+ 
+		int responseCode = conn.getResponseCode();
+		System.out.println("Sending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		//System.out.println(reader.readLine());
+		Map<String, String>  summoners = gson.fromJson(reader, new TypeToken<Map<String, String>>(){}.getType());
+		reader.close(); // close BufferedReader AND InputStreamReader
+		conn.disconnect();
+		
+		return summoners;
+		}
+		
+		
+		// Get rune pages mapped by summoner ID for a given list of summoner IDs
 		public Map<String, RunePages> getSummonersRunes(String summonerIDs) throws Exception{			
 			
 		String url = baseURL+"/"+summonerIDs+"/runes"+urlSuffix;

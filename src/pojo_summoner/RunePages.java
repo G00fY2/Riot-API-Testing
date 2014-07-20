@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class RunePages {
 	
-	public long summonerId;
 	public Set<RunePage> pages;
+	public long summonerId;
 
 }
