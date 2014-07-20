@@ -92,6 +92,15 @@ public class MainClass {
 		Map<String, List<League>> league = leagueAPI.getLeague("22573844");
 		System.out.println("- - - - -LaegueAPI-- - - -");
 		System.out.println(league.get("22573844").get(0).entries.get(21).playerOrTeamName);
+		Map<String, List<League>> leagueEntry = leagueAPI.getLeagueSingleEntry("22573844");
+		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
+		System.out.println(leagueEntry.get("22573844").get(0).entries.get(0).leaguePoints);
+
+		Thread.sleep(10000); // temporary workaround to avoid API rate limit
+
+		League leagueChallegner = leagueAPI.getLeagueChallenger("RANKED_SOLO_5x5");
+		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
+		System.out.println(leagueChallegner.name);
 	}
 
 }
