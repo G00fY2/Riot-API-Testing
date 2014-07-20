@@ -8,6 +8,7 @@ import java.util.Set;
 
 import pojo_champion.*;
 import pojo_game.*;
+import pojo_league.League;
 import pojo_stats.*;
 import pojo_summoner.*;
 import api_category.*;
@@ -31,7 +32,7 @@ public class MainClass {
 		String region = "euw";
 		String apiVersionChampion = "1.2";
 		String apiVersionGame = "1.3";
-		//String apiVersionLeague = "2.4";
+		String apiVersionLeague = "2.4";
 		//String apiVersionStaticData = "1.2";
 		String apiVersionStats = "1.3";
 		String apiVersionSummoner = "1.4";
@@ -83,6 +84,14 @@ public class MainClass {
 		PlayerStatSummaries playerStats = statsAPI.getSummary(22573844, 4);
 		System.out.println("- - - - -StatsAPI-Summary- - - -");
 		System.out.println(playerStats.playerStatSummaries.get(0).playerStatSummaryType);
+		/* 
+		 * test league API
+		 * */
+		LeagueAPI leagueAPI = new LeagueAPI(protocol, baseURL, urlSuffix, region, apiVersionLeague);
+
+		Map<String, List<League>> league = leagueAPI.getLeague("22573844");
+		System.out.println("- - - - -LaegueAPI-- - - -");
+		System.out.println(league.get("22573844").get(0).entries.get(21).playerOrTeamName);
 	}
 
 }
