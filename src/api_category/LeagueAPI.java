@@ -19,7 +19,8 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-summoner/" + summonerIDs + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return league;
 	}
 
@@ -27,7 +28,8 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-summoner/" + summonerIDs + "/entry" + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return league;
 	}
 
@@ -35,7 +37,8 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-team/" + teamIDs + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return league;
 	}
 
@@ -43,7 +46,8 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-team/" + teamIDs + "/entry" + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return league;
 	}
 
@@ -53,7 +57,8 @@ public class LeagueAPI extends RiotAPI {
 		String url = baseURL + "/challenger" + urlSuffix;
 		url = url.replace("?api", "?type=" + gameType + "&api");
 		League league = gson.fromJson(getJsonFromUrl(url), League.class);
-
+		closeJsonFromUrl();
+		
 		return league;
 	}
 

@@ -38,8 +38,8 @@ public class MainClass {
 		String apiVersionSummoner = "1.4";
 		//String apiVersionTeam = "2.3";
 
-		//TODO: For Android use TextUtils class for HTML encode
-		//TODO: For Android use JSONObject class for parse JSON
+		//TODO: For Android use JSONObject?
+		
 		/* 
 		 * test summoner API
 		 * */

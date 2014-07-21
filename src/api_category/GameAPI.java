@@ -18,7 +18,8 @@ public class GameAPI extends RiotAPI{
 
 		String url = baseURL.replace("{summonerId}", Long.toString(summonerID))+urlSuffix;
 		Games games = gson.fromJson(getJsonFromUrl(url), Games.class);
-
+		closeJsonFromUrl();
+		
 		return games.games;
 	}
 

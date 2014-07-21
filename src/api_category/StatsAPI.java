@@ -15,7 +15,8 @@ public class StatsAPI extends RiotAPI{
 
 		String url = baseURL.replace("{summonerId}", Long.toString(summonerID))+"/ranked"+urlSuffix.replace("?", "?season=SEASON"+season+"&");
 		ChampionsStats championStats = gson.fromJson(getJsonFromUrl(url), ChampionsStats.class);
-
+		closeJsonFromUrl();
+		
 		return championStats;
 	}
 
@@ -23,7 +24,8 @@ public class StatsAPI extends RiotAPI{
 
 		String url = baseURL.replace("{summonerId}", Long.toString(summonerID))+"/summary"+urlSuffix.replace("?", "?season=SEASON"+season+"&");
 		PlayerStatSummaries playerStats = gson.fromJson(getJsonFromUrl(url), PlayerStatSummaries.class);
-
+		closeJsonFromUrl();
+		
 		return playerStats;
 	}
 

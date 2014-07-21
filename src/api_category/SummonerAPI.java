@@ -19,7 +19,8 @@ public class SummonerAPI extends RiotAPI {
 
 		String url = baseURL + "/by-name/" + ((summonerNames.toLowerCase()).replaceAll("\\s+", "")) + urlSuffix;
 		Map<String, SummonersBy> summoners = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, SummonersBy>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return summoners;
 	}
 
@@ -28,7 +29,8 @@ public class SummonerAPI extends RiotAPI {
 
 		String url = baseURL + "/" + summonerIDs + urlSuffix;
 		Map<Integer, SummonersBy> summoners = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<Integer, SummonersBy>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return summoners;
 	}
 
@@ -37,6 +39,7 @@ public class SummonerAPI extends RiotAPI {
 
 		String url = baseURL + "/" + summonerIDs + "/masteries" + urlSuffix;
 		Map<String, MasteryPages> summoners = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, MasteryPages>>(){}.getType());
+		closeJsonFromUrl();
 		
 		return summoners;
 	}
@@ -46,7 +49,8 @@ public class SummonerAPI extends RiotAPI {
 
 		String url = baseURL + "/" + summonerIDs + urlSuffix;
 		Map<String, String> summoners = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, String>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return summoners;
 	}
 
@@ -55,7 +59,8 @@ public class SummonerAPI extends RiotAPI {
 
 		String url = baseURL + "/" + summonerIDs + "/runes" + urlSuffix;
 		Map<String, RunePages> summoners = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, RunePages>>(){}.getType());
-
+		closeJsonFromUrl();
+		
 		return summoners;
 	}
 

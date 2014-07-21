@@ -18,7 +18,8 @@ public class ChampionAPI extends RiotAPI {
 
 		String url = baseURL + urlSuffix;
 		Champions champions = gson.fromJson(getJsonFromUrl(url), Champions.class);
-
+		closeJsonFromUrl();
+		
 		return champions.champions;
 	}
 
@@ -27,7 +28,8 @@ public class ChampionAPI extends RiotAPI {
 
 		String url = baseURL + "/" + championID + urlSuffix;
 		Champion champion = gson.fromJson(getJsonFromUrl(url), Champion.class);
-
+		closeJsonFromUrl();
+		
 		return champion;
 	}
 
