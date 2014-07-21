@@ -15,17 +15,17 @@ import api_category.*;
 
 
 public class MainClass {
-	
+
 	public static void main(String[] args) throws Exception {
-		
+
 		String apiFile = "F:\\workspace\\apikey.txt";
 		String apiKey = "";
-		
+
 		// read API Key from first line of local textfile (temporary solution)
 		BufferedReader br = new BufferedReader(new FileReader(apiFile));
 		apiKey = br.readLine();
 		br.close();
-		
+
 		String protocol = "https://";
 		String baseURL = "{region}.api.pvp.net/api/lol/{region}/{apiVersion}/{category}";
 		String urlSuffix = "?api_key="+apiKey;
@@ -37,6 +37,7 @@ public class MainClass {
 		String apiVersionStats = "1.3";
 		String apiVersionSummoner = "1.4";
 		//String apiVersionTeam = "2.3";
+
 		//TODO: For Android use TextUtils class for HTML encode
 		//TODO: For Android use JSONObject class for parse JSON
 		/* 
