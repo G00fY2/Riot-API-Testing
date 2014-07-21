@@ -13,8 +13,6 @@ public abstract class RiotAPI {
 
 	protected String baseURL;
 	protected String urlSuffix;
-	protected BufferedReader reader;
-	protected HttpsURLConnection conn;
 	protected Gson gson;
 
 	public RiotAPI(String protocol, String baseURL, String urlSuffix, String region, String apiVersion, String category){
