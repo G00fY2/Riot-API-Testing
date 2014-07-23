@@ -19,7 +19,6 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-summoner/" + summonerIDs + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-		closeJsonFromUrl();
 		
 		return league;
 	}
@@ -28,7 +27,6 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-summoner/" + summonerIDs + "/entry" + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-		closeJsonFromUrl();
 		
 		return league;
 	}
@@ -37,7 +35,6 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-team/" + teamIDs + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-		closeJsonFromUrl();
 		
 		return league;
 	}
@@ -46,7 +43,6 @@ public class LeagueAPI extends RiotAPI {
 
 		String url = baseURL + "/by-team/" + teamIDs + "/entry" + urlSuffix;
 		Map<String, List<League>> league = gson.fromJson(getJsonFromUrl(url), new TypeToken<Map<String, List<League>>>(){}.getType());
-		closeJsonFromUrl();
 		
 		return league;
 	}
@@ -54,10 +50,8 @@ public class LeagueAPI extends RiotAPI {
 	public League getLeagueChallenger(String gameType) throws Exception {
 
 		// possible game types: "RANKED_SOLO_5x5", "RANKED_TEAM_3x3", "RANKED_TEAM_5x5"
-		String url = baseURL + "/challenger" + urlSuffix;
-		url = url.replace("?api", "?type=" + gameType + "&api");
+		String url = baseURL + "/challenger" + urlSuffix + "&type=" + gameType;
 		League league = gson.fromJson(getJsonFromUrl(url), League.class);
-		closeJsonFromUrl();
 		
 		return league;
 	}

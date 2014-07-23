@@ -13,9 +13,7 @@ public abstract class RiotAPI {
 
 	protected String baseURL;
 	protected String urlSuffix;
-	protected Gson gson;	
-	protected BufferedReader reader;
-	protected HttpsURLConnection conn;
+	protected Gson gson;
 
 	public RiotAPI(String protocol, String baseURL, String urlSuffix, String region, String apiVersion, String category){
 		this.baseURL = baseURL.replace("{region}",region);
@@ -26,18 +24,28 @@ public abstract class RiotAPI {
 		gson = new Gson();
 	}
 
-	protected BufferedReader getJsonFromUrl(String rawUrl) throws Exception{
+	protected String getJsonFromUrl(String rawUrl) throws Exception{
 		URL obj = encodeURL(rawUrl);
-		conn = (HttpsURLConnection) obj.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
-
 		int responseCode = conn.getResponseCode();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));		
+		StringBuilder builder = new StringBuilder();
+		String jsonString = "";
+		
+		while ((jsonString = reader.readLine()) != null) {
+		    builder.append(jsonString);
+		}
+		reader.close();
+		conn.disconnect();
+		jsonString = builder.toString();
+		
 		System.out.println("Sending 'GET' request to URL : " + obj.toString());
 		System.out.println("Response Code : " + responseCode);
+		System.out.println("Content lenght : " + jsonString.length());
 
-		reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));		
-
-		return reader;
+		return jsonString;
 	}
 
 	public URL encodeURL(String rawUrl) throws Exception{
@@ -46,15 +54,6 @@ public abstract class RiotAPI {
 		url = uri.toURL();
 		
 		return url;
-	}
-	
-	protected void closeJsonFromUrl() throws Exception{
-		if (reader != null){
-			reader.close(); // close BufferedReader AND InputStreamReader
-		}
-		if (conn != null){
-			conn.disconnect();
-		}
 	}
 
 }

@@ -39,7 +39,7 @@ public class MainClass {
 		//String apiVersionTeam = "2.3";
 
 		//TODO: For Android use JSONObject?
-		
+		long startTime = System.currentTimeMillis();
 		/* 
 		 * test summoner API
 		 * */
@@ -96,12 +96,17 @@ public class MainClass {
 		Map<String, List<League>> leagueEntry = leagueAPI.getLeagueSingleEntry("22573844");
 		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
 		System.out.println(leagueEntry.get("22573844").get(0).entries.get(0).leaguePoints);
-
+		
+		long stopTime = System.currentTimeMillis();
+	    System.out.println("EXECUTION TIME: " + (stopTime - startTime) + " msec");
+		
 		Thread.sleep(10000); // temporary workaround to avoid API rate limit
 
 		League leagueChallegner = leagueAPI.getLeagueChallenger("RANKED_SOLO_5x5");
 		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
 		System.out.println(leagueChallegner.name);
+		
+
 	}
 
 }
