@@ -30,13 +30,16 @@ public class MainClass {
 		String baseURL = "{region}.api.pvp.net/api/lol/{region}/{apiVersion}/{category}";
 		String urlSuffix = "?api_key="+apiKey;
 		String region = "euw";
+		
 		String apiVersionChampion = "1.2";
 		String apiVersionGame = "1.3";
-		String apiVersionLeague = "2.4";
+		String apiVersionLeague = "2.5";
 		//String apiVersionStaticData = "1.2";
+		//String apiMatch = "2.2";
+		//String apiMatchhistory = "2.2"; 
 		String apiVersionStats = "1.3";
 		String apiVersionSummoner = "1.4";
-		//String apiVersionTeam = "2.3";
+		//String apiVersionTeam = "2.4";
 
 		//TODO: For Android use JSONObject?
 		long startTime = System.currentTimeMillis();
