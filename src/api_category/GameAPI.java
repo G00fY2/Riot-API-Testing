@@ -15,11 +15,10 @@ public class GameAPI extends RiotAPI{
 
 	// return a object List with all champions
 	public Set<Game> getGames(long summonerID) throws Exception{			
-
+		Class<Games> classOf = Games.class;
 		String url = baseURL.replace("{summonerId}", Long.toString(summonerID))+urlSuffix;
-		Games games = gson.fromJson(getJsonFromUrl(url), Games.class);
 		
-		return games.games;
+		return getObjectFromJsonUrl(url, classOf).games;
 	}
 
 }

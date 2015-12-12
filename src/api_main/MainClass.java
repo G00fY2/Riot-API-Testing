@@ -18,7 +18,7 @@ public class MainClass {
 
 	public static void main(String[] args) throws Exception {
 
-		String apiFile = "F:\\workspace\\apikey.txt";
+		String apiFile = "D:\\workspace\\apikey.txt";
 		String apiKey = "";
 
 		// read API Key from first line of local textfile (temporary solution)
@@ -31,15 +31,17 @@ public class MainClass {
 		String urlSuffix = "?api_key="+apiKey;
 		String region = "euw";
 		
-		String apiVersionChampion = "1.2";
-		String apiVersionGame = "1.3";
-		String apiVersionLeague = "2.5";
-		//String apiVersionStaticData = "1.2";
-		//String apiMatch = "2.2";
-		//String apiMatchhistory = "2.2"; 
-		String apiVersionStats = "1.3";
-		String apiVersionSummoner = "1.4";
-		//String apiVersionTeam = "2.4";
+		String apiVersionChampion = "1.2";	// returns champion info
+		// String apiCurrentGame = "1.0";	// returns current game info
+		// String apiFeaturedGames = "1.0";
+		String apiVersionGame = "1.3";		// returns recent games info
+		String apiVersionLeague = "2.5";	// returns league info
+		//String apiLoLStaticData = "1.2";	// static data (items, runes, spells...)
+		//String apiMatch = "2.2";			// returns match detail info
+		//String apiMatchhistory = "2.2";	// returns player match history info 
+		String apiVersionStats = "1.3";		// returns ranked stats inf
+		String apiVersionSummoner = "1.4";	// returns summoner info
+		//String apiVersionTeam = "2.4";	// returns team info
 
 		//TODO: For Android use JSONObject?
 		long startTime = System.currentTimeMillis();
@@ -48,9 +50,9 @@ public class MainClass {
 		 * */
 		SummonerAPI summAPI = new SummonerAPI(protocol, baseURL, urlSuffix, region, apiVersionSummoner);
 
-		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("g00fy2");
+		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("hi im g00fy");
 		System.out.println("- - - - -SummonerAPI-Summoner- - - -");
-		System.out.println(summByName.get("g00fy2").id);
+		System.out.println(summByName.get("hiimg00fy").id); //name in all lower case and with spaces removed!
 		// MasteryPages
 		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries("22573844");
 		System.out.println("- - - - -SummonerAPI-Masteries- - - -");

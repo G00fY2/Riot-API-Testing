@@ -15,20 +15,18 @@ public class ChampionAPI extends RiotAPI {
 
 	// Retrieve all champions
 	public List<Champion> getChampions() throws Exception {
-
+		Class<Champions> classOf =  Champions.class;
 		String url = baseURL + urlSuffix;
-		Champions champions = gson.fromJson(getJsonFromUrl(url), Champions.class);
-		
-		return champions.champions;
+
+		return getObjectFromJsonUrl(url, classOf).champions;
 	}
 
 	// Retrieve champion by ID
 	public Champion getChampionByID(int championID) throws Exception {
-
+		Class<Champion> classOf =  Champion.class;
 		String url = baseURL + "/" + championID + urlSuffix;
-		Champion champion = gson.fromJson(getJsonFromUrl(url), Champion.class);
-		
-		return champion;
+
+		return getObjectFromJsonUrl(url, classOf);
 	}
 
 }

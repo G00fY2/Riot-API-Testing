@@ -2,6 +2,7 @@ package api_category;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
 
@@ -23,8 +24,45 @@ public abstract class RiotAPI {
 		this.urlSuffix = urlSuffix;
 		gson = new Gson();
 	}
+	
+	protected <T> T getObjectFromJsonUrl(String rawUrl, Class<T> classOf) throws Exception{
+		URL obj = encodeURL(rawUrl);
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
+		conn.setRequestMethod("GET");
+		int responseCode = conn.getResponseCode();
 
-	protected String getJsonFromUrl(String rawUrl) throws Exception{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));		
+		
+		System.out.println("Sending 'GET' request to URL : " + obj.toString());
+		System.out.println("Response Code : " + responseCode);
+
+		T object = gson.fromJson(reader, classOf);
+		reader.close();
+		conn.disconnect();
+		
+		return object;
+	}
+	
+	protected <T> T getObjectFromJsonUrl(String rawUrl,  Type typeOf) throws Exception{
+		URL obj = encodeURL(rawUrl);
+		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
+		conn.setRequestMethod("GET");
+		int responseCode = conn.getResponseCode();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));		
+		
+		System.out.println("Sending 'GET' request to URL : " + obj.toString());
+		System.out.println("Response Code : " + responseCode);
+
+		T object = gson.fromJson(reader, typeOf);
+		reader.close();
+		conn.disconnect();
+		
+		return object;
+	}
+	
+	//method previous been used to get JSON as String
+	protected String getJsonStringFromUrl(String rawUrl) throws Exception{
 		URL obj = encodeURL(rawUrl);
 		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
