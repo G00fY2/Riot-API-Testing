@@ -11,48 +11,47 @@ import com.google.gson.reflect.TypeToken;
 
 public class SummonerAPI extends RiotAPI {
 
-	public SummonerAPI(String protocol, String baseURL, String urlSuffix, String region, String apiVersion) {
-		super(protocol, baseURL, urlSuffix, region, apiVersion, "summoner");
+	public SummonerAPI(String protocol, String urlPath, String urlQuery, String region, String apiVersion) {
+		super(protocol, urlPath, urlQuery, region, apiVersion, "summoner");
 	}
 
 	// Get summoner objects mapped by standardized summoner name for a given list of summoner names
 	public Map<String, SummonersBy> getSummonersByNames(String summonerNames) throws Exception {
 		Type typeOf = new TypeToken<Map<String, SummonersBy>>(){}.getType();
-		String url = baseURL + "/by-name/" + ((summonerNames.toLowerCase()).replaceAll("\\s", "")) + urlSuffix;
-		
+		String url = urlPath + "/by-name/" + ((summonerNames.toLowerCase()).replaceAll("\\s", "")) + urlQuery;
 		return getObjectFromJsonUrl(url, typeOf);
 	}
 
 	// Get summoner objects mapped by summoner ID for a given list of summoner IDs
 	public Map<Integer, SummonersBy> getSummonersByIDs(String summonerIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<Integer, SummonersBy>>(){}.getType();
-		String url = baseURL + "/" + summonerIDs + urlSuffix;
+		String url = urlPath + "/" + summonerIDs + urlQuery;
 		
-		return getObjectFromJsonUrl(url, typeOf);
+		return getObjectFromJsonUrl(url,typeOf);
 	}
 
 	// Get mastery pages mapped by summoner ID for a given list of summoner IDs
 	public Map<String, MasteryPages> getSummonersMasteries(String summonerIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<String, MasteryPages>>(){}.getType();
-		String url = baseURL + "/" + summonerIDs + "/masteries" + urlSuffix;
+		String url = urlPath + "/" + summonerIDs + "/masteries" + urlQuery;
 
-		return getObjectFromJsonUrl(url, typeOf);
+		return getObjectFromJsonUrl(url,typeOf);
 	}
 
 	// Get summoner names mapped by summoner ID for a given list of summoner IDs
 	public Map<String, String> getSummonersNames(String summonerIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<String, String>>(){}.getType();
-		String url = baseURL + "/" + summonerIDs + urlSuffix;
+		String url = urlPath + "/" + summonerIDs + urlQuery;
 		
-		return getObjectFromJsonUrl(url, typeOf);
+		return getObjectFromJsonUrl(url,typeOf);
 	}
 
 	// Get rune pages mapped by summoner ID for a given list of summoner IDs
 	public Map<String, RunePages> getSummonersRunes(String summonerIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<String, RunePages>>(){}.getType();
-		String url = baseURL + "/" + summonerIDs + "/runes" + urlSuffix;
+		String url = urlPath + "/" + summonerIDs + "/runes" + urlQuery;
 		
-		return getObjectFromJsonUrl(url, typeOf);
+		return getObjectFromJsonUrl(url,typeOf);
 	}
 
 }

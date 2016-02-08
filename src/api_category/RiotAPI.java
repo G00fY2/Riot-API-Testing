@@ -11,17 +11,19 @@ import javax.net.ssl.HttpsURLConnection;
 import com.google.gson.Gson;
 
 public abstract class RiotAPI {
-
-	protected String baseURL;
-	protected String urlSuffix;
+	
+	protected String protocol;
+	protected String urlPath;
+	protected String urlQuery;
 	protected Gson gson;
 
-	public RiotAPI(String protocol, String baseURL, String urlSuffix, String region, String apiVersion, String category){
-		this.baseURL = baseURL.replace("{region}",region);
-		this.baseURL = this.baseURL.replace("{apiVersion}","v"+apiVersion);
-		this.baseURL = this.baseURL.replace("{category}",category);
-		this.baseURL = protocol+this.baseURL;
-		this.urlSuffix = urlSuffix;
+	public RiotAPI(String protocol, String urlPath, String urlQuery, String region, String apiVersion, String category){
+		urlPath = urlPath.replace("{region}",region);
+		urlPath = urlPath.replace("{apiVersion}","v"+apiVersion);
+		urlPath = urlPath.replace("{category}",category);
+		this.protocol = protocol;
+		this.urlPath = urlPath;
+		this.urlQuery = urlQuery;
 		gson = new Gson();
 	}
 	
@@ -43,7 +45,7 @@ public abstract class RiotAPI {
 		return object;
 	}
 	
-	protected <T> T getObjectFromJsonUrl(String rawUrl,  Type typeOf) throws Exception{
+	protected <T> T getObjectFromJsonUrl(String rawUrl, Type typeOf) throws Exception{
 		URL obj = encodeURL(rawUrl);
 		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 		conn.setRequestMethod("GET");
@@ -61,7 +63,7 @@ public abstract class RiotAPI {
 		return object;
 	}
 	
-	//method previous been used to get JSON as String
+	//method previous been used to return JSON as String
 	protected String getJsonStringFromUrl(String rawUrl) throws Exception{
 		URL obj = encodeURL(rawUrl);
 		HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
@@ -86,11 +88,10 @@ public abstract class RiotAPI {
 		return jsonString;
 	}
 
-	public URL encodeURL(String rawUrl) throws Exception{
-		URL url = new URL(rawUrl);
+	private URL encodeURL(String rawUrl) throws Exception{
+		URL url = new URL(protocol+rawUrl);
 		URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 		url = uri.toURL();
-		
 		return url;
 	}
 
