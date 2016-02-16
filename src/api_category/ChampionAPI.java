@@ -16,17 +16,17 @@ public class ChampionAPI extends RiotAPI {
 	// Retrieve all champions
 	public List<Champion> getChampions() throws Exception {
 		Class<Champions> classOf =  Champions.class;
-		String url = urlBase + urlSuffix;
+		String rawUrl = getUrlBase() + getUrlSuffix();
 
-		return getObjectFromJsonUrl(url, classOf).champions;
+		return getObjectFromJsonUrl(rawUrl, classOf).champions;
 	}
 
 	// Retrieve champion by ID
 	public Champion getChampionByID(int championID) throws Exception {
 		Class<Champion> classOf =  Champion.class;
-		String url = urlBase + "/" + championID + urlSuffix;
+		String rawUrl = getUrlBase() + "/" + championID + getUrlSuffix();
 
-		return getObjectFromJsonUrl(url, classOf);
+		return getObjectFromJsonUrl(rawUrl, classOf);
 	}
 
 }

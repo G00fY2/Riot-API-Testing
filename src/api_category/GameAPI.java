@@ -16,9 +16,9 @@ public class GameAPI extends RiotAPI{
 	// return a object List with all champions
 	public Set<Game> getGames(long summonerID) throws Exception{			
 		Class<Games> classOf = Games.class;
-		String url = urlBase.replace("{summonerId}", Long.toString(summonerID))+urlSuffix;
+		String rawUrl = getUrlBase().replace("{summonerId}", Long.toString(summonerID))+getUrlSuffix();
 		
-		return getObjectFromJsonUrl(url, classOf).games;
+		return getObjectFromJsonUrl(rawUrl, classOf).games;
 	}
 
 }

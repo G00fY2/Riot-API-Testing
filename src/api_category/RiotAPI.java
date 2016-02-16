@@ -12,20 +12,17 @@ import com.google.gson.Gson;
 
 public abstract class RiotAPI {
 	
-	protected String protocol;
-	protected String urlBase;
-	protected String urlSuffix;
-	protected String region;
-	protected String apiVersion;
-	protected String category;
+	private String protocol;
+	private String urlBase;
+	private String urlSuffix;
+	private String region;
+	private String apiVersion;
+	private String category;
 	private Gson gson;
 
 	public RiotAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion, String category){
-		urlBase = urlBase.replace("{region}",region);
-		urlBase = urlBase.replace("{apiVersion}","v"+apiVersion);
-		urlBase = urlBase.replace("{category}",category);
 		this.protocol = protocol;
-		this.urlBase = urlBase;
+		this.urlBase = urlBase.replace("{region}",region).replace("{apiVersion}","v"+apiVersion).replace("{category}",category);
 		this.urlSuffix = urlSuffix;
 		this.region = region;
 		this.apiVersion = apiVersion;
@@ -93,7 +90,7 @@ public abstract class RiotAPI {
 
 		return jsonString;
 	}
-	
+
 	private URL encodeURL(String rawUrl) throws Exception{
 		URL url = new URL(protocol+rawUrl);
 		URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
@@ -101,8 +98,20 @@ public abstract class RiotAPI {
 		return uri.toURL();
 	}
 	
+	protected String getUrlBase(){
+		return urlBase;
+	}
+	protected String getUrlSuffix(){
+		return urlSuffix;
+	}
 	public String getRegion(){
 		return region;
+	}
+	protected String getApiVersion(){
+		return apiVersion;
+	}
+	protected String getCategory(){
+		return category;
 	}
 
 }

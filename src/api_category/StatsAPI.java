@@ -13,16 +13,16 @@ public class StatsAPI extends RiotAPI{
 
 	public ChampionsStats getRanked(long summonerID, int season) throws Exception{			
 		Class<ChampionsStats> classOf = ChampionsStats.class;
-		String url = urlBase.replace("{summonerId}", Long.toString(summonerID))+"/ranked"+urlSuffix.replace("?", "?season=SEASON"+season+"&");
+		String rawUrl = getUrlBase().replace("{summonerId}", Long.toString(summonerID))+"/ranked"+getUrlSuffix().replace("?", "?season=SEASON"+season+"&");
 		
-		return getObjectFromJsonUrl(url, classOf);
+		return getObjectFromJsonUrl(rawUrl, classOf);
 	}
 
 	public PlayerStatSummaries getSummary(long summonerID, int season) throws Exception{			
 		Class<PlayerStatSummaries> classOf = PlayerStatSummaries.class;
-		String url = urlBase.replace("{summonerId}", Long.toString(summonerID))+"/summary"+urlSuffix.replace("?", "?season=SEASON"+season+"&");
+		String rawUrl = getUrlBase().replace("{summonerId}", Long.toString(summonerID))+"/summary"+getUrlSuffix().replace("?", "?season=SEASON"+season+"&");
 		
-		return getObjectFromJsonUrl(url, classOf);
+		return getObjectFromJsonUrl(rawUrl, classOf);
 	}
 
 }
