@@ -9,14 +9,14 @@ public class ChampionAPI extends RiotAPI {
 
 	final static String category = "champion";
 
-	public ChampionAPI(String protocol, String urlPath, String urlQuery, String region, String apiVersion) {
-		super(protocol, urlPath, urlQuery, region, apiVersion, category);
+	public ChampionAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion) {
+		super(protocol, urlBase, urlSuffix, region, apiVersion, category);
 	}
 
 	// Retrieve all champions
 	public List<Champion> getChampions() throws Exception {
 		Class<Champions> classOf =  Champions.class;
-		String url = urlPath + urlQuery;
+		String url = urlBase + urlSuffix;
 
 		return getObjectFromJsonUrl(url, classOf).champions;
 	}
@@ -24,7 +24,7 @@ public class ChampionAPI extends RiotAPI {
 	// Retrieve champion by ID
 	public Champion getChampionByID(int championID) throws Exception {
 		Class<Champion> classOf =  Champion.class;
-		String url = urlPath + "/" + championID + urlQuery;
+		String url = urlBase + "/" + championID + urlSuffix;
 
 		return getObjectFromJsonUrl(url, classOf);
 	}

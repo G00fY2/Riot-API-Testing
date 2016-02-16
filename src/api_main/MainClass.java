@@ -27,8 +27,8 @@ public class MainClass {
 		br.close();
 		
 		String protocol = "https://";
-		String urlPath = "{region}.api.pvp.net/api/lol/{region}/{apiVersion}/{category}";
-		String urlQuery = "?api_key="+apiKey;
+		String urlBase = "{region}.api.pvp.net/api/lol/{region}/{apiVersion}/{category}";
+		String urlSuffix = "?api_key="+apiKey;
 		String region = "euw";
 		
 		String apiVersionChampion = "1.2";	// returns champion info
@@ -48,12 +48,13 @@ public class MainClass {
 		/* 
 		 * test summoner API
 		 * */
-		SummonerAPI summAPI = new SummonerAPI(protocol, urlPath, urlQuery, region, apiVersionSummoner);
+		SummonerAPI summAPI = new SummonerAPI(protocol, urlBase, urlSuffix, region, apiVersionSummoner);
 
 		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("hi im g00fy");
 		System.out.println("- - - - -SummonerAPI-Summoner- - - -");
 		System.out.println(summByName.get("hiimg00fy").id); //name in all lower case and with spaces removed!
 		// MasteryPages
+		System.out.println("DEBUG: "+summAPI.getRegion());
 		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries("22573844");
 		System.out.println("- - - - -SummonerAPI-Masteries- - - -");
 		System.out.println(summMasteries.get("22573844").pages.iterator().next().name);
@@ -67,7 +68,7 @@ public class MainClass {
 		/*
 		 * test champion API
 		 */
-		ChampionAPI champAPI = new ChampionAPI(protocol, urlPath, urlQuery, region, apiVersionChampion);	
+		ChampionAPI champAPI = new ChampionAPI(protocol, urlBase, urlSuffix, region, apiVersionChampion);	
 		List<Champion> champions = champAPI.getChampions();
 		System.out.println("- - - - -ChampionAPI- - - - -");
 		System.out.println(champions.get(0).id);
@@ -76,14 +77,14 @@ public class MainClass {
 		/*
 		 * test game API
 		 */
-		GameAPI gameAPI = new GameAPI(protocol, urlPath, urlQuery, region, apiVersionGame);
+		GameAPI gameAPI = new GameAPI(protocol, urlBase, urlSuffix, region, apiVersionGame);
 		Set<Game> games = gameAPI.getGames(22573844);
 		System.out.println("- - - - -GameAPI- - - - -");
 		System.out.println(games.iterator().next().stats.level);
 		/*
 		 * test stats API
 		 */
-		StatsAPI statsAPI = new StatsAPI(protocol, urlPath, urlQuery, region, apiVersionStats);
+		StatsAPI statsAPI = new StatsAPI(protocol, urlBase, urlSuffix, region, apiVersionStats);
 		ChampionsStats championStats = statsAPI.getRanked(22573844, 4);
 		System.out.println("- - - - -StatsAPI-Ranked- - - -");
 		System.out.println(championStats.champions.get(0).stats.totalDamageDealt);
@@ -93,7 +94,7 @@ public class MainClass {
 		/* 
 		 * test league API
 		 * */
-		LeagueAPI leagueAPI = new LeagueAPI(protocol, urlPath, urlQuery, region, apiVersionLeague);
+		LeagueAPI leagueAPI = new LeagueAPI(protocol, urlBase, urlSuffix, region, apiVersionLeague);
 
 		Map<String, List<League>> league = leagueAPI.getLeague("22573844");
 		System.out.println("- - - - -LaegueAPI-- - - -");

@@ -13,17 +13,23 @@ import com.google.gson.Gson;
 public abstract class RiotAPI {
 	
 	protected String protocol;
-	protected String urlPath;
-	protected String urlQuery;
-	protected Gson gson;
+	protected String urlBase;
+	protected String urlSuffix;
+	protected String region;
+	protected String apiVersion;
+	protected String category;
+	private Gson gson;
 
-	public RiotAPI(String protocol, String urlPath, String urlQuery, String region, String apiVersion, String category){
-		urlPath = urlPath.replace("{region}",region);
-		urlPath = urlPath.replace("{apiVersion}","v"+apiVersion);
-		urlPath = urlPath.replace("{category}",category);
+	public RiotAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion, String category){
+		urlBase = urlBase.replace("{region}",region);
+		urlBase = urlBase.replace("{apiVersion}","v"+apiVersion);
+		urlBase = urlBase.replace("{category}",category);
 		this.protocol = protocol;
-		this.urlPath = urlPath;
-		this.urlQuery = urlQuery;
+		this.urlBase = urlBase;
+		this.urlSuffix = urlSuffix;
+		this.region = region;
+		this.apiVersion = apiVersion;
+		this.category = category;
 		gson = new Gson();
 	}
 	
@@ -87,12 +93,16 @@ public abstract class RiotAPI {
 
 		return jsonString;
 	}
-
+	
 	private URL encodeURL(String rawUrl) throws Exception{
 		URL url = new URL(protocol+rawUrl);
 		URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
-		url = uri.toURL();
-		return url;
+		
+		return uri.toURL();
+	}
+	
+	public String getRegion(){
+		return region;
 	}
 
 }
