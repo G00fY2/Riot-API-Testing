@@ -13,8 +13,9 @@ public class SummonerAPI extends RiotAPI {
 
 	final static String category = "summoner";
 	
-	public SummonerAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion) {
-		super(protocol, urlBase, urlSuffix, region, apiVersion, category);
+	final static String apiVersion = "1.4";
+	public SummonerAPI(final Map<String, String> apiValues) {
+		super(apiValues, apiVersion, category);
 	}
 
 	// Get summoner objects mapped by standardized summoner name for a given list of summoner names

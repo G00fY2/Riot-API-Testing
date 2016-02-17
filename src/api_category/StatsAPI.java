@@ -1,14 +1,17 @@
 package api_category;
 
+import java.util.Map;
+
 import pojo_stats.ChampionsStats;
 import pojo_stats.PlayerStatSummaries;
 
 public class StatsAPI extends RiotAPI{
 
+	final static String apiVersion = "1.3";
 	final static String category = "stats/by-summoner/{summonerId}";
 
-	public StatsAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion){
-		super(protocol,urlBase, urlSuffix, region, apiVersion, category);
+	public StatsAPI(final Map<String, String> apiValues) {
+		super(apiValues, apiVersion, category);
 	}
 
 	public ChampionsStats getRanked(long summonerID, int season) throws Exception{			

@@ -2,6 +2,7 @@ package api_main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,29 +27,30 @@ public class MainClass {
 		apiKey = br.readLine();
 		br.close();
 		
-		String protocol = "https://";
-		String urlBase = "{region}.api.pvp.net/api/lol/{region}/{apiVersion}/{category}";
-		String urlSuffix = "?api_key="+apiKey;
-		String region = "euw";
+		Map<String, String> apiValues = new HashMap<String, String>();	
+		apiValues.put("protocol", "https://");
+		apiValues.put("urlBase", "{region}.api.pvp.net/api/lol/{region}/{apiVersion}/{category}");
+		apiValues.put("urlSuffix", "?api_key="+apiKey);
+		apiValues.put("region", "euw");
 		
-		String apiVersionChampion = "1.2";	// returns champion info
-		String apiCurrentGame = "1.0";	// returns current game info
+		// String apiVersionChampion = "1.2";	// returns champion info
+		// String apiCurrentGame = "1.0";	// returns current game info
 		// String apiFeaturedGames = "1.0";
-		String apiVersionGame = "1.3";		// returns recent games info
-		String apiVersionLeague = "2.5";	// returns league info
-		//String apiLoLStaticData = "1.2";	// static data (items, runes, spells...)
-		//String apiMatch = "2.2";			// returns match detail info
-		//String apiMatchhistory = "2.2";	// returns player match history info 
-		String apiVersionStats = "1.3";		// returns ranked stats inf
-		String apiVersionSummoner = "1.4";	// returns summoner info
-		//String apiVersionTeam = "2.4";	// returns team info
+		// String apiVersionGame = "1.3";		// returns recent games info
+		// String apiVersionLeague = "2.5";	// returns league info
+		// String apiLoLStaticData = "1.2";	// static data (items, runes, spells...)
+		// String apiMatch = "2.2";			// returns match detail info
+		// String apiMatchhistory = "2.2";	// returns player match history info 
+		// String apiVersionStats = "1.3";		// returns ranked stats inf
+		// String apiVersionSummoner = "1.4";	// returns summoner info
+		// String apiVersionTeam = "2.4";	// returns team info
 
 		//TODO: For Android use JSONObject?
 		long startTime = System.currentTimeMillis();
 		/* 
 		 * test summoner API
 		 * */
-		SummonerAPI summAPI = new SummonerAPI(protocol, urlBase, urlSuffix, region, apiVersionSummoner);
+		SummonerAPI summAPI = new SummonerAPI(apiValues);
 
 		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("hi im g00fy");
 		System.out.println("- - - - -SummonerAPI-Summoner- - - -");
@@ -68,7 +70,7 @@ public class MainClass {
 		/*
 		 * test champion API
 		 */
-		ChampionAPI champAPI = new ChampionAPI(protocol, urlBase, urlSuffix, region, apiVersionChampion);	
+		ChampionAPI champAPI = new ChampionAPI(apiValues);	
 		List<Champion> champions = champAPI.getChampions();
 		System.out.println("- - - - -ChampionAPI- - - - -");
 		System.out.println(champions.get(0).id);
@@ -77,14 +79,14 @@ public class MainClass {
 		/*
 		 * test game API
 		 */
-		GameAPI gameAPI = new GameAPI(protocol, urlBase, urlSuffix, region, apiVersionGame);
+		GameAPI gameAPI = new GameAPI(apiValues);
 		Set<Game> games = gameAPI.getGames(22573844);
 		System.out.println("- - - - -GameAPI- - - - -");
 		System.out.println(games.iterator().next().stats.level);
 		/*
 		 * test stats API
 		 */
-		StatsAPI statsAPI = new StatsAPI(protocol, urlBase, urlSuffix, region, apiVersionStats);
+		StatsAPI statsAPI = new StatsAPI(apiValues);
 		ChampionsStats championStats = statsAPI.getRanked(22573844, 4);
 		System.out.println("- - - - -StatsAPI-Ranked- - - -");
 		System.out.println(championStats.champions.get(0).stats.totalDamageDealt);
@@ -94,7 +96,7 @@ public class MainClass {
 		/* 
 		 * test league API
 		 * */
-		LeagueAPI leagueAPI = new LeagueAPI(protocol, urlBase, urlSuffix, region, apiVersionLeague);
+		LeagueAPI leagueAPI = new LeagueAPI(apiValues);
 
 		Map<String, List<League>> league = leagueAPI.getLeague("22573844");
 		System.out.println("- - - - -LaegueAPI-- - - -");

@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -20,13 +21,13 @@ public abstract class RiotAPI {
 	private String category;
 	private Gson gson;
 
-	public RiotAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion, String category){
-		this.protocol = protocol;
-		this.urlBase = urlBase.replace("{region}",region).replace("{apiVersion}","v"+apiVersion).replace("{category}",category);
-		this.urlSuffix = urlSuffix;
-		this.region = region;
+	public RiotAPI(final Map<String, String> apiValues, final String apiVersion, final String category){
+		protocol = apiValues.get("protocol");
+		urlSuffix = apiValues.get("urlSuffix");
+		region = apiValues.get("region");
 		this.apiVersion = apiVersion;
 		this.category = category;
+		urlBase = apiValues.get("urlBase").replace("{region}",region).replace("{apiVersion}","v"+apiVersion).replace("{category}",category);	
 		gson = new Gson();
 	}
 	

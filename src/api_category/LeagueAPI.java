@@ -10,10 +10,11 @@ import com.google.gson.reflect.TypeToken;
 
 public class LeagueAPI extends RiotAPI {
 
+	final static String apiVersion = "2.5";
 	final static String category = "league";
 
-	public LeagueAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion) {
-		super(protocol, urlBase, urlSuffix, region, apiVersion, category);
+	public LeagueAPI(final Map<String, String> apiValues) {
+		super(apiValues, apiVersion, category);
 	}
 
 	public Map<String, List<League>> getLeague(String summonerIDs) throws Exception {

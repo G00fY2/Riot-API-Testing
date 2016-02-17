@@ -1,16 +1,18 @@
 package api_category;
 
 import java.util.List;
+import java.util.Map;
 
 import pojo_champion.Champion;
 import pojo_champion.Champions;
 
 public class ChampionAPI extends RiotAPI {
 
+	final static String apiVersion = "1.2";
 	final static String category = "champion";
 
-	public ChampionAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion) {
-		super(protocol, urlBase, urlSuffix, region, apiVersion, category);
+	public ChampionAPI(final Map<String, String> apiValues) {
+		super(apiValues, apiVersion, category);
 	}
 
 	// Retrieve all champions

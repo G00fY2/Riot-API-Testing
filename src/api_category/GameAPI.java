@@ -1,5 +1,6 @@
 package api_category;
 
+import java.util.Map;
 import java.util.Set;
 
 import pojo_game.Game;
@@ -7,10 +8,11 @@ import pojo_game.Games;
 
 public class GameAPI extends RiotAPI{
 
+	final static String apiVersion = "1.3";
 	final static String category = "game/by-summoner/{summonerId}/recent";
 
-	public GameAPI(String protocol, String urlBase, String urlSuffix, String region, String apiVersion){
-		super(protocol, urlBase, urlSuffix, region, apiVersion, category);
+	public GameAPI(final Map<String, String> apiValues) {
+		super(apiValues, apiVersion, category);
 	}
 
 	// return a object List with all champions
