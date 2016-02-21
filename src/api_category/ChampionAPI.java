@@ -8,27 +8,29 @@ import pojo_champion.Champions;
 
 public class ChampionAPI extends RiotAPI {
 
-	final static String apiVersion = "1.2";
-	final static String category = "champion";
+	final static String apiVersion = "/v1.2";
+	final static String apiCategory = "/champion";
 
 	public ChampionAPI(final Map<String, String> apiValues) {
-		super(apiValues, apiVersion, category);
+		super(apiValues, apiVersion, apiCategory);
 	}
 
 	// Retrieve all champions
 	public List<Champion> getChampions() throws Exception {
 		Class<Champions> classOf =  Champions.class;
-		String rawUrl = getUrlBase() + getUrlSuffix();
-
-		return getObjectFromJsonUrl(rawUrl, classOf).champions;
+		String urlPath = buildUrlPath();
+		String urlQuery = getUrlQuery();
+		
+		return getObjectFromJsonUrl(urlPath, urlQuery, classOf).champions;
 	}
 
 	// Retrieve champion by ID
 	public Champion getChampionByID(int championID) throws Exception {
 		Class<Champion> classOf =  Champion.class;
-		String rawUrl = getUrlBase() + "/" + championID + getUrlSuffix();
-
-		return getObjectFromJsonUrl(rawUrl, classOf);
+		String urlPath = buildUrlPath() + "/" + championID;
+		String urlQuery = getUrlQuery();
+		
+		return getObjectFromJsonUrl(urlPath, urlQuery, classOf);
 	}
 
 }

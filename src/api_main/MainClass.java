@@ -28,81 +28,76 @@ public class MainClass {
 		br.close();
 		
 		Map<String, String> apiValues = new HashMap<String, String>();	
-		apiValues.put("protocol", "https://");
-		apiValues.put("urlBase", "{region}.api.pvp.net/api/lol/{region}/{apiVersion}/{category}");
-		apiValues.put("urlSuffix", "?api_key="+apiKey);
+		apiValues.put("urlProtocol", "https");
+		apiValues.put("urlHost", ".api.pvp.net");
+		apiValues.put("urlPath", "/api/lol/");
+		apiValues.put("apiKey", apiKey);
 		apiValues.put("region", "euw");
-		
-		// String apiVersionChampion = "1.2";	// returns champion info
-		// String apiCurrentGame = "1.0";	// returns current game info
-		// String apiFeaturedGames = "1.0";
-		// String apiVersionGame = "1.3";		// returns recent games info
-		// String apiVersionLeague = "2.5";	// returns league info
-		// String apiLoLStaticData = "1.2";	// static data (items, runes, spells...)
-		// String apiMatch = "2.2";			// returns match detail info
-		// String apiMatchhistory = "2.2";	// returns player match history info 
-		// String apiVersionStats = "1.3";		// returns ranked stats inf
-		// String apiVersionSummoner = "1.4";	// returns summoner info
-		// String apiVersionTeam = "2.4";	// returns team info
 
 		//TODO: For Android use JSONObject?
 		long startTime = System.currentTimeMillis();
 		/* 
 		 * test summoner API
 		 * */
+		System.out.println("---------SummonerAPI---------");
 		SummonerAPI summAPI = new SummonerAPI(apiValues);
-
-		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("hi im g00fy");
+		
 		System.out.println("- - - - -SummonerAPI-Summoner- - - -");
+		Map<String, SummonersBy> summByName = summAPI.getSummonersByNames("hi im g00fy");
 		System.out.println(summByName.get("hiimg00fy").id); //name in all lower case and with spaces removed!
-		// MasteryPages
-		System.out.println("DEBUG: "+summAPI.getRegion());
+		System.out.println("- - - - -SummonerAPI-Masteries- - - -"); // MasteryPages
 		Map<String, MasteryPages> summMasteries = summAPI.getSummonersMasteries("22573844");
-		System.out.println("- - - - -SummonerAPI-Masteries- - - -");
 		System.out.println(summMasteries.get("22573844").pages.iterator().next().name);
+		System.out.println("- - - - -SummonerAPI-Runes- - - -");
 		Map<String, RunePages> summRunes = summAPI.getSummonersRunes("22573844");
-		// iterate through RunePages
-		for(RunePage page : summRunes.get("22573844").pages){
-			System.out.println("- - - - -SummonerAPI-Runes- - - -");
+		for(RunePage page : summRunes.get("22573844").pages){ // iterate through RunePages
 			System.out.println(page.slots.iterator().next().runeId);
 			break;
 		}	
 		/*
 		 * test champion API
 		 */
-		ChampionAPI champAPI = new ChampionAPI(apiValues);	
+		System.out.println("---------ChampionAPI---------");
+		ChampionAPI champAPI = new ChampionAPI(apiValues);
+		
+		System.out.println("- - - - -ChampionAPI-Champions- - - - -");
 		List<Champion> champions = champAPI.getChampions();
-		System.out.println("- - - - -ChampionAPI- - - - -");
 		System.out.println(champions.get(0).id);
+		System.out.println("- - - - -ChampionAPI-ChampionByID- - - - -");
 		Champion champion = champAPI.getChampionByID(2);
 		System.out.println(champion.freeToPlay.toString());
 		/*
 		 * test game API
 		 */
+		System.out.println("---------GameAPI---------");
 		GameAPI gameAPI = new GameAPI(apiValues);
+		
+		System.out.println("- - - - -GameAPI-GetGame- - - - -");
 		Set<Game> games = gameAPI.getGames(22573844);
-		System.out.println("- - - - -GameAPI- - - - -");
 		System.out.println(games.iterator().next().stats.level);
 		/*
 		 * test stats API
 		 */
+		System.out.println("---------StatsAPI---------");
 		StatsAPI statsAPI = new StatsAPI(apiValues);
-		ChampionsStats championStats = statsAPI.getRanked(22573844, 4);
+		
 		System.out.println("- - - - -StatsAPI-Ranked- - - -");
+		ChampionsStats championStats = statsAPI.getRanked(22573844, 4);
 		System.out.println(championStats.champions.get(0).stats.totalDamageDealt);
-		PlayerStatSummaries playerStats = statsAPI.getSummary(22573844, 4);
 		System.out.println("- - - - -StatsAPI-Summary- - - -");
+		PlayerStatSummaries playerStats = statsAPI.getSummary(22573844, 4);
 		System.out.println(playerStats.playerStatSummaries.get(0).playerStatSummaryType);
 		/* 
 		 * test league API
 		 * */
+		System.out.println("---------LaegueAPI---------");
 		LeagueAPI leagueAPI = new LeagueAPI(apiValues);
-
+		
+		System.out.println("- - - - -LaegueAPI-GetLeague-- - - -");
 		Map<String, List<League>> league = leagueAPI.getLeague("22573844");
-		System.out.println("- - - - -LaegueAPI-- - - -");
 		System.out.println(league.get("22573844").get(0).entries.get(21).playerOrTeamName);
-		Map<String, List<League>> leagueEntry = leagueAPI.getLeagueSingleEntry("22573844");
 		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
+		Map<String, List<League>> leagueEntry = leagueAPI.getLeagueSingleEntry("22573844");
 		System.out.println(leagueEntry.get("22573844").get(0).entries.get(0).leaguePoints);
 		
 		long stopTime = System.currentTimeMillis();
@@ -110,8 +105,8 @@ public class MainClass {
 		
 		Thread.sleep(10000); // temporary workaround to avoid API rate limit
 
-		League leagueChallegner = leagueAPI.getLeagueChallenger("RANKED_SOLO_5x5");
 		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
+		League leagueChallegner = leagueAPI.getLeagueChallenger("RANKED_SOLO_5x5");
 		System.out.println(leagueChallegner.name);
 		
 

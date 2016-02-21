@@ -10,46 +10,52 @@ import com.google.gson.reflect.TypeToken;
 
 public class LeagueAPI extends RiotAPI {
 
-	final static String apiVersion = "2.5";
-	final static String category = "league";
+	final static String apiVersion = "/v2.5";
+	final static String apiCategory = "/league";
 
 	public LeagueAPI(final Map<String, String> apiValues) {
-		super(apiValues, apiVersion, category);
+		super(apiValues, apiVersion, apiCategory);
 	}
 
 	public Map<String, List<League>> getLeague(String summonerIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<String, List<League>>>(){}.getType();
-		String rawUrl = getUrlBase() + "/by-summoner/" + summonerIDs + getUrlSuffix();
-		
-		return getObjectFromJsonUrl(rawUrl, typeOf);
+		String urlPath = buildUrlPath() + "/by-summoner/" + summonerIDs;
+		String urlQuery = getUrlQuery();
+				
+		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
 	}
 
 	public Map<String, List<League>> getLeagueSingleEntry(String summonerIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<String, List<League>>>(){}.getType();
-		String rawUrl = getUrlBase() + "/by-summoner/" + summonerIDs + "/entry" + getUrlSuffix();
-		
-		return getObjectFromJsonUrl(rawUrl, typeOf);
+		String urlPath = buildUrlPath() + "/by-summoner/" + summonerIDs + "/entry";
+		String urlQuery = getUrlQuery();
+				
+		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
 	}
 
 	public Map<String, List<League>> getLeagueTeam(String teamIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<String, List<League>>>(){}.getType();
-		String rawUrl = getUrlBase() + "/by-team/" + teamIDs + getUrlSuffix();
-		
-		return getObjectFromJsonUrl(rawUrl, typeOf);
+		String urlPath = buildUrlPath() + "/by-team/" + teamIDs;
+		String urlQuery = getUrlQuery();
+				
+		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
 	}
 
 	public Map<String, List<League>> getLeagueTeamSingleEntry(String teamIDs) throws Exception {
 		Type typeOf = new TypeToken<Map<String, List<League>>>(){}.getType();
-		String rawUrl = getUrlBase() + "/by-team/" + teamIDs + "/entry" + getUrlSuffix();
-		
-		return getObjectFromJsonUrl(rawUrl, typeOf);
+		String urlPath = buildUrlPath() + "/by-team/" + teamIDs + "/entry";
+		String urlQuery = getUrlQuery();
+				
+		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
 	}
 
 	public League getLeagueChallenger(String gameType) throws Exception {
 		Class<League> classOf = League.class;
-		String rawUrl = getUrlBase() + "/challenger" + getUrlSuffix() + "&type=" + gameType;
+		String urlPath = buildUrlPath() + "/challenger";
 		// possible game types: "RANKED_SOLO_5x5", "RANKED_TEAM_3x3", "RANKED_TEAM_5x5"
-		return getObjectFromJsonUrl(rawUrl, classOf);
+		String urlQuery = getUrlQuery() + "&type=" + gameType;
+				
+		return getObjectFromJsonUrl(urlPath, urlQuery, classOf);
 	}
 
 }
