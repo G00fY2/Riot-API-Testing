@@ -45,7 +45,7 @@ public abstract class RiotAPI {
 
 		T object = gson.fromJson(reader, classOf);
 		reader.close();
-		conn.disconnect();
+		//conn.disconnect(); don't disconnect to reuse underlying socket
 		
 		return object;
 	}
@@ -63,7 +63,7 @@ public abstract class RiotAPI {
 
 		T object = gson.fromJson(reader, typeOf);
 		reader.close();
-		conn.disconnect();
+		//conn.disconnect(); don't disconnect to reuse underlying socket
 		
 		return object;
 	}
@@ -89,6 +89,7 @@ public abstract class RiotAPI {
 	public String getRegion(){
 		return region;
 	}
+	
 	protected String getUrlQuery(){
 		return urlQuery;
 	}

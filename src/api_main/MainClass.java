@@ -29,7 +29,6 @@ public class MainClass {
 		br.close();
 		
 		Map<String, String> apiValues = new HashMap<String, String>();	
-		apiValues.put("urlProtocol", "https");
 		apiValues.put("urlHost", ".api.pvp.net");
 		apiValues.put("urlPath", "/api/lol/");
 		apiValues.put("apiKey", apiKey);
