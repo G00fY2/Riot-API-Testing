@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import pojo_champion.*;
+import pojo_current.*;
 import pojo_game.*;
 import pojo_league.League;
 import pojo_stats.*;
@@ -107,7 +108,16 @@ public class MainClass {
 
 		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
 		League leagueChallegner = leagueAPI.getLeagueChallenger("RANKED_SOLO_5x5");
-		System.out.println(leagueChallegner.name);
+		System.out.println(leagueChallegner.name);	
+		/*
+		 * test CurrentGameInfo
+		 */
+		System.out.println("---------CurrentGameInfo---------");
+		CurrentGameAPI currentGameAPI = new CurrentGameAPI(apiValues);
+		
+		System.out.println("- - - - -CurrentGameInfo-GetCurrentGameInfo- - - - -");
+		CurrentGameInfo currentGame = currentGameAPI.getCurrentGameInfo("EUW1",19264473);
+		System.out.println(Long.toString(currentGame.gameId));
 		
 
 	}
