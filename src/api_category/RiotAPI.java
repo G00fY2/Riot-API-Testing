@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 
 public abstract class RiotAPI {
 	
-	private String urlProtocol;
 	private String urlHost;
 	private String urlPath;
 	private String urlQuery;
@@ -24,7 +23,6 @@ public abstract class RiotAPI {
 	private Gson gson;
 
 	public RiotAPI(final Map<String, String> apiValues, final String apiVersion, final String apiCategory){
-		urlProtocol = apiValues.get("urlProtocol");
 		urlHost = apiValues.get("urlHost");
 		urlPath = apiValues.get("urlPath");
 		urlQuery = "api_key=" + apiValues.get("apiKey");
@@ -72,7 +70,7 @@ public abstract class RiotAPI {
 
 	
 	private URL encodeUrl(String urlPath, String urlQuery) throws Exception{
-		URI uri = new URI(urlProtocol, null, region+urlHost, -1, urlPath , urlQuery, null);
+		URI uri = new URI("https", null, region+urlHost, -1, urlPath , urlQuery, null);
 		return uri.toURL();
 	}
 	
