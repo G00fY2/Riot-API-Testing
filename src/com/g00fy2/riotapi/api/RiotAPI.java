@@ -39,56 +39,49 @@ public abstract class RiotAPI {
 	}
 	
 	protected <T> T getObjectFromJsonUrl(String urlPath, String urlQuery, Class<T> classOf) throws ApiException{
-		try
+		
+		HttpsURLConnection conn = establishHttpsConn(urlPath, urlQuery);
+		
+		try ( BufferedReader reader = new BufferedReader( new InputStreamReader(conn.getInputStream() ) ) )
 		{
-			HttpsURLConnection conn = establishHttpsConn(urlPath, urlQuery);
-			try ( BufferedReader reader = new BufferedReader( new InputStreamReader(conn.getInputStream() ) ) )
-			{
-				T object = gson.fromJson(reader, classOf);
-				System.out.println("DEBUG : JSON deserialization succeeded");
+			T object = gson.fromJson(reader, classOf);
+			System.out.println("DEBUG : JSON deserialization succeeded");
 				
-				return object;			
-			}
-			catch (JsonIOException | JsonSyntaxException e)
-			{
-				throw new GsonException("Failed parsing JSON.");
-			}
-			catch (IOException e)
-			{
-				throw new ApiException("Unable to get data from URL.");
-			}
+			return object;			
 		}
-		catch (ApiException e)
+		catch (JsonIOException | JsonSyntaxException e)
 		{
-			throw e;
-		}	
+			throw new GsonException("Failed parsing JSON.");
+		}
+		catch (IOException e)
+		{
+			throw new ApiException("Unable to get data from URL.");
+		}
 	}
+
+
 	
 	protected <T> T getObjectFromJsonUrl(String urlPath, String urlQuery, Type typeOf) throws ApiException{
-		try
+		
+		HttpsURLConnection conn = establishHttpsConn(urlPath, urlQuery);
+		
+		try ( BufferedReader reader = new BufferedReader( new InputStreamReader(conn.getInputStream() ) ) )
 		{
-			HttpsURLConnection conn = establishHttpsConn(urlPath, urlQuery);
-			try ( BufferedReader reader = new BufferedReader( new InputStreamReader(conn.getInputStream() ) ) )
-			{
-				T object = gson.fromJson(reader, typeOf);
-				System.out.println("DEBUG : JSON deserialization succeeded");
+			T object = gson.fromJson(reader, typeOf);
+			System.out.println("DEBUG : JSON deserialization succeeded");
 				
-				return object;
-			}
-			catch (JsonIOException | JsonSyntaxException e)
-			{
-				throw new GsonException("Failed parsing JSON.");
-			}
-			catch (IOException e)
-			{
-				throw new ApiException("Unable to get data from URL.");
-			}
+			return object;			
 		}
-		catch (ApiException e)
+		catch (JsonIOException | JsonSyntaxException e)
 		{
-			throw e;
-		}	
-	}
+			throw new GsonException("Failed parsing JSON.");
+		}
+		catch (IOException e)
+		{
+			throw new ApiException("Unable to get data from URL.");
+		}
+	}	
+
 	
 	private HttpsURLConnection establishHttpsConn(String urlPath, String urlQuery) throws ApiException{
 		try
