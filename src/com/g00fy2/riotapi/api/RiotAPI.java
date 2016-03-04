@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -102,7 +103,11 @@ public abstract class RiotAPI {
 	    }
 		catch (URISyntaxException e)
 		{
-			throw new ApiException(e.getReason() + " in URI " + e.getInput());
+			throw new ApiException("Invalid URI Syntax.");
+		}
+		catch (MalformedURLException e)
+		{
+			throw new ApiException("Malformed URL.");
 		}
 		catch (IOException e)
 		{
