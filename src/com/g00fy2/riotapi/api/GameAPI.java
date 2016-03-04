@@ -3,6 +3,7 @@ package com.g00fy2.riotapi.api;
 import java.util.Map;
 import java.util.Set;
 
+import com.g00fy2.riotapi.exception.ApiException;
 import com.g00fy2.riotapi.pojo.game.*;
 
 public class GameAPI extends RiotAPI{
@@ -15,7 +16,7 @@ public class GameAPI extends RiotAPI{
 	}
 
 	// return a object List with all champions
-	public Set<Game> getGames(long summonerID) throws Exception{			
+	public Set<Game> getGames(long summonerID) throws ApiException{			
 		Class<Games> classOf = Games.class;
 		String urlPath = buildUrlPath() + Long.toString(summonerID) + "/recent";
 		String urlQuery = getUrlQuery();

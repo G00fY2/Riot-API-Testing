@@ -3,6 +3,7 @@ package com.g00fy2.riotapi.api;
 import java.util.List;
 import java.util.Map;
 
+import com.g00fy2.riotapi.exception.ApiException;
 import com.g00fy2.riotapi.pojo.champion.*;
 
 public class ChampionAPI extends RiotAPI {
@@ -15,7 +16,7 @@ public class ChampionAPI extends RiotAPI {
 	}
 
 	// Retrieve all champions
-	public List<Champion> getChampions() throws Exception {
+	public List<Champion> getChampions() throws ApiException {
 		Class<Champions> classOf =  Champions.class;
 		String urlPath = buildUrlPath();
 		String urlQuery = getUrlQuery();
@@ -24,7 +25,7 @@ public class ChampionAPI extends RiotAPI {
 	}
 
 	// Retrieve champion by ID
-	public Champion getChampionByID(int championID) throws Exception {
+	public Champion getChampionByID(int championID) throws ApiException {
 		Class<Champion> classOf =  Champion.class;
 		String urlPath = buildUrlPath() + "/" + championID;
 		String urlQuery = getUrlQuery();

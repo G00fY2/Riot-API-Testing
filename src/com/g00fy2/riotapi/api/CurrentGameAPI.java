@@ -2,6 +2,7 @@ package com.g00fy2.riotapi.api;
 
 import java.util.Map;
 
+import com.g00fy2.riotapi.exception.ApiException;
 import com.g00fy2.riotapi.pojo.current.*;
 
 public class CurrentGameAPI extends RiotAPI {
@@ -14,7 +15,7 @@ public class CurrentGameAPI extends RiotAPI {
 	}
 
 	// Retrieve all champions
-	public CurrentGameInfo getCurrentGameInfo(String platformId, long summonerId) throws Exception {
+	public CurrentGameInfo getCurrentGameInfo(String platformId, long summonerId) throws ApiException {
 		Class<CurrentGameInfo> classOf =  CurrentGameInfo.class;
 		String urlPath = apiCategory + "/" + platformId + "/" + Long.toString(summonerId);
 		String urlQuery = getUrlQuery();

@@ -12,7 +12,10 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.g00fy2.riotapi.exception.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 
 public abstract class RiotAPI {
 	
@@ -35,7 +38,7 @@ public abstract class RiotAPI {
 		gson = new Gson();
 	}
 	
-	protected <T> T getObjectFromJsonUrl(String urlPath, String urlQuery, Class<T> classOf) throws URISyntaxException, IOException{
+	protected <T> T getObjectFromJsonUrl(String urlPath, String urlQuery, Class<T> classOf) throws ApiException{
 		try
 		{
 			HttpsURLConnection conn = establishHttpsConn(urlPath, urlQuery);
@@ -43,20 +46,25 @@ public abstract class RiotAPI {
 			{
 				T object = gson.fromJson(reader, classOf);
 				System.out.println("DEBUG : JSON deserialization succeeded");
-				return object;
+				
+				return object;			
 			}
-			catch (IOException e) //GSON (JsonIOException, JsonSyntaxException), HttpURLConnection (IOException)
+			catch (JsonIOException | JsonSyntaxException e)
 			{
-				throw e;
+				throw new GsonException("Failed parsing JSON.");
+			}
+			catch (IOException e)
+			{
+				throw new ApiException("Unable to get data from URL.");
 			}
 		}
-		catch (URISyntaxException | IOException e)
+		catch (ApiException e)
 		{
 			throw e;
-		}
+		}	
 	}
 	
-	protected <T> T getObjectFromJsonUrl(String urlPath, String urlQuery, Type typeOf) throws URISyntaxException, IOException{
+	protected <T> T getObjectFromJsonUrl(String urlPath, String urlQuery, Type typeOf) throws ApiException{
 		try
 		{
 			HttpsURLConnection conn = establishHttpsConn(urlPath, urlQuery);
@@ -64,20 +72,25 @@ public abstract class RiotAPI {
 			{
 				T object = gson.fromJson(reader, typeOf);
 				System.out.println("DEBUG : JSON deserialization succeeded");
+				
 				return object;
 			}
-			catch (IOException e) //GSON (JsonIOException, JsonSyntaxException), HttpURLConnection (IOException)
+			catch (JsonIOException | JsonSyntaxException e)
 			{
-				throw e;
+				throw new GsonException("Failed parsing JSON.");
+			}
+			catch (IOException e)
+			{
+				throw new ApiException("Unable to get data from URL.");
 			}
 		}
-		catch (URISyntaxException | IOException e)
+		catch (ApiException e)
 		{
 			throw e;
 		}	
 	}
 	
-	private HttpsURLConnection establishHttpsConn(String urlPath, String urlQuery) throws IOException, URISyntaxException{
+	private HttpsURLConnection establishHttpsConn(String urlPath, String urlQuery) throws ApiException{
 		try
 	    {
 			URI uri = new URI("https", null, region+urlHost, -1, urlPath , urlQuery, null);
@@ -88,12 +101,20 @@ public abstract class RiotAPI {
 			System.out.println("DEBUG : Sending 'GET' request to URL : " + obj.toString());
 			System.out.println("DEBUG : Response Code : " + conn.getResponseCode());
 			
+			if (conn.getResponseCode() != 200){
+				throw new ApiException("Bad HTTP response code.");
+			}
+			
 			return conn;
 	    }
-		catch (URISyntaxException | IOException e)
+		catch (URISyntaxException e)
 		{
-			throw e;
-		}		
+			throw new ApiException(e.getReason() + " in URI " + e.getInput());
+		}
+		catch (IOException e)
+		{
+			throw new ApiException("Could not connect to server.");
+		}
 	}
 	
 	public void setRegion(String region) throws IllegalArgumentException{
