@@ -10,7 +10,7 @@ public class CurrentGameAPI extends RiotAPI {
 	final static String apiVersion = ""; //v1.0
 	final static String apiCategory = "/observer-mode/rest/consumer/getSpectatorGameInfo";
 	
-	public CurrentGameAPI(final Map<String, String> apiValues) {
+	public CurrentGameAPI(final Map<String, String> apiValues) throws ApiException {
 		super(apiValues, apiVersion, apiCategory);
 	}
 

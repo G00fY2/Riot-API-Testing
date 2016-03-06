@@ -11,7 +11,7 @@ public class ChampionAPI extends RiotAPI {
 	final static String apiVersion = "/v1.2";
 	final static String apiCategory = "/champion";
 
-	public ChampionAPI(final Map<String, String> apiValues) {
+	public ChampionAPI(final Map<String, String> apiValues) throws ApiException {
 		super(apiValues, apiVersion, apiCategory);
 	}
 

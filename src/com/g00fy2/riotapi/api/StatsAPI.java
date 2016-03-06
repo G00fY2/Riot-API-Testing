@@ -10,7 +10,7 @@ public class StatsAPI extends RiotAPI{
 	final static String apiVersion = "/v1.3";
 	final static String apiCategory = "/stats/by-summoner/";
 
-	public StatsAPI(final Map<String, String> apiValues) {
+	public StatsAPI(final Map<String, String> apiValues) throws ApiException {
 		super(apiValues, apiVersion, apiCategory);
 	}
 

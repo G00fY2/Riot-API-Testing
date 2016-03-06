@@ -11,7 +11,7 @@ public class GameAPI extends RiotAPI{
 	final static String apiVersion = "/v1.3";
 	final static String apiCategory = "/game/by-summoner/";
 
-	public GameAPI(final Map<String, String> apiValues) {
+	public GameAPI(final Map<String, String> apiValues) throws ApiException {
 		super(apiValues, apiVersion, apiCategory);
 	}
 

@@ -14,7 +14,7 @@ public class LeagueAPI extends RiotAPI {
 	final static String apiVersion = "/v2.5";
 	final static String apiCategory = "/league";
 
-	public LeagueAPI(final Map<String, String> apiValues) {
+	public LeagueAPI(final Map<String, String> apiValues) throws ApiException {
 		super(apiValues, apiVersion, apiCategory);
 	}
 

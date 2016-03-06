@@ -11,5 +11,4 @@ public class ApiException extends Exception {
 	{
 		super(message, cause);
 	}
-
 }

@@ -29,7 +29,7 @@ public abstract class RiotAPI {
 	private Gson gson;
 	final String[] regions = new String[] {"br","eune","euw","kr","lan","las","na","oce","ru","tr"};
 
-	public RiotAPI(final Map<String, String> apiValues, final String apiVersion, final String apiCategory){
+	public RiotAPI(final Map<String, String> apiValues, final String apiVersion, final String apiCategory) throws ApiException{
 		urlHost = apiValues.get("urlHost");
 		urlPath = apiValues.get("urlPath");
 		urlQuery = "api_key=" + apiValues.get("apiKey");
@@ -50,16 +50,19 @@ public abstract class RiotAPI {
 				
 			return object;			
 		}
-		catch (JsonIOException | JsonSyntaxException e)
+		catch (JsonSyntaxException e)
 		{
-			throw new GsonException("Failed parsing JSON.");
+			throw new GsonException("No valid JSON representation for an object of type.");
+		}
+		catch (JsonIOException e)
+		{
+			throw new GsonException("Failed reading from the Reader.");
 		}
 		catch (IOException e)
 		{
 			throw new ApiException("Unable to get data from URL.");
 		}
 	}
-
 
 	
 	protected <T> T getObjectFromJsonUrl(String urlPath, String urlQuery, Type typeOf) throws ApiException{
@@ -73,9 +76,13 @@ public abstract class RiotAPI {
 				
 			return object;			
 		}
-		catch (JsonIOException | JsonSyntaxException e)
+		catch (JsonSyntaxException e)
 		{
-			throw new GsonException("Failed parsing JSON.");
+			throw new GsonException("No valid JSON representation for an object of type.");
+		}
+		catch (JsonIOException e)
+		{
+			throw new GsonException("Failed reading from the Reader.");
 		}
 		catch (IOException e)
 		{
@@ -85,20 +92,24 @@ public abstract class RiotAPI {
 
 	
 	private HttpsURLConnection establishHttpsConn(String urlPath, String urlQuery) throws ApiException{
+		int responseCode = 0;
+		
 		try
 	    {
 			URI uri = new URI("https", null, region+urlHost, -1, urlPath , urlQuery, null);
 			URL obj = uri.toURL();
 			HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
 			conn.setRequestMethod("GET");
+					
+			responseCode = conn.getResponseCode();
 
 			System.out.println("DEBUG : Sending 'GET' request to URL : " + obj.toString());
-			System.out.println("DEBUG : Response Code : " + conn.getResponseCode());
+			System.out.println("DEBUG : Response Code : " + responseCode);
 			
-			if (conn.getResponseCode() != 200){
-				throw new ApiException("Bad HTTP response code.");
+			if (responseCode != 200){
+				throw new ResponseErrorException(responseCode);
 			}
-			
+					
 			return conn;
 	    }
 		catch (URISyntaxException e)
@@ -115,10 +126,11 @@ public abstract class RiotAPI {
 		}
 	}
 	
-	public void setRegion(String region) throws IllegalArgumentException{
+	
+	public void setRegion(String region) throws IllegalApiParameterException{
 		region.trim().toLowerCase();
 		if ( !(Arrays.asList(regions).contains(region)) ){
-			throw new IllegalArgumentException("Unkown API region.");		
+			throw new IllegalApiParameterException("Unkown API region.");		
 		}
 		else this.region = region;
 	}	

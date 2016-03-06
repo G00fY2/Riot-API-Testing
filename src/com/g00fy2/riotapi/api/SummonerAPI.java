@@ -13,7 +13,7 @@ public class SummonerAPI extends RiotAPI {
 	final static String apiVersion = "/v1.4";
 	final static String apiCategory = "/summoner";
 	
-	public SummonerAPI(final Map<String, String> apiValues) {
+	public SummonerAPI(final Map<String, String> apiValues) throws ApiException {
 		super(apiValues, apiVersion, apiCategory);
 	}
 
