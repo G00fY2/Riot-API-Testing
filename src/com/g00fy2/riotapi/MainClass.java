@@ -85,7 +85,7 @@ public class MainClass {
 		ChampionsStats championStats = statsAPI.getRanked(22573844, 4);
 		System.out.println(championStats.champions.get(0).stats.totalDamageDealt);
 		System.out.println("- - - - -StatsAPI-Summary- - - -");
-		PlayerStatSummaries playerStats = statsAPI.getSummary(22573844, 4);
+		PlayerStatSummaries playerStats = statsAPI.getSummary(22573844, "SEASON2016");
 		System.out.println(playerStats.playerStatSummaries.get(0).playerStatSummaryType);
 		/* 
 		 * test league API

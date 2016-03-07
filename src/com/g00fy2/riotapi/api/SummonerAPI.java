@@ -3,6 +3,7 @@ package com.g00fy2.riotapi.api;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+import com.g00fy2.riotapi.ApiUtils;
 import com.g00fy2.riotapi.exception.ApiException;
 import com.g00fy2.riotapi.pojo.summoner.*;
 
@@ -55,6 +56,7 @@ public class SummonerAPI extends RiotAPI {
 
 	// Get rune pages mapped by summoner ID for a given list of summoner IDs
 	public Map<String, RunePages> getSummonersRunes(String summonerIDs) throws ApiException {
+		ApiUtils.isCommaSeparatedIntegerList(summonerIDs);
 		Type typeOf = new TypeToken<Map<String, RunePages>>(){}.getType();
 		String urlPath = buildUrlPath() + "/" + summonerIDs + "/runes";
 		String urlQuery = getUrlQuery();

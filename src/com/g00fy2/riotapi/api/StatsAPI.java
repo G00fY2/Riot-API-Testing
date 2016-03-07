@@ -2,6 +2,7 @@ package com.g00fy2.riotapi.api;
 
 import java.util.Map;
 
+import com.g00fy2.riotapi.ApiUtils;
 import com.g00fy2.riotapi.exception.ApiException;
 import com.g00fy2.riotapi.pojo.stats.*;
 
@@ -22,10 +23,19 @@ public class StatsAPI extends RiotAPI{
 		return getObjectFromJsonUrl(urlPath, urlQuery, classOf);
 	}
 
-	public PlayerStatSummaries getSummary(long summonerID, int season) throws ApiException{			
+	public PlayerStatSummaries getSummary(long summonerID, String season) throws ApiException{			
 		Class<PlayerStatSummaries> classOf = PlayerStatSummaries.class;
 		String urlPath = buildUrlPath() + Long.toString(summonerID) + "/summary";
-		String urlQuery = "season=SEASON" + season + "&" + getUrlQuery();
+		ApiUtils.isValidSeason(season);
+		String urlQuery = "season=" + season + "&" + getUrlQuery();
+		
+		return getObjectFromJsonUrl(urlPath, urlQuery, classOf);
+	}
+	
+	public PlayerStatSummaries getSummary(long summonerID) throws ApiException{			
+		Class<PlayerStatSummaries> classOf = PlayerStatSummaries.class;
+		String urlPath = buildUrlPath() + Long.toString(summonerID) + "/summary";
+		String urlQuery = getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, classOf);
 	}
