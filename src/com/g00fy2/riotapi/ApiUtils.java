@@ -14,24 +14,26 @@ public class ApiUtils {
 	
 	
 	public static boolean isValidRegion( String region ) throws IllegalApiParameterException{
-	region.toLowerCase().trim();
-	if ( Arrays.asList(regions).contains(region) )
-		return true;
-	else
-		throw new IllegalApiParameterException(region + " is not a valid region.");		
+		region.toLowerCase().trim();
+		
+		if ( Arrays.asList(regions).contains(region) )
+			return true;
+		else
+			throw new IllegalApiParameterException(region + " is not a valid region.");		
 	}
 	
 	public static boolean isValidGameType( String gameType ) throws IllegalApiParameterException{
 		gameType.toLowerCase().trim();
-	if ( Arrays.asList(regions).contains(gameType) )
-		return true;
-	else
-		throw new IllegalApiParameterException(gameType + " is not a valid game type.");		
+		
+		if ( Arrays.asList(regions).contains(gameType) )
+			return true;
+		else
+			throw new IllegalApiParameterException(gameType + " is not a valid game type.");		
 	}
 	
 	public static boolean isCommaSeparatedIntegerList( String list ) throws IllegalApiParameterException{
 		list.replaceAll("\\s+","");
-		System.out.println(list);
+		
 		if ( Pattern.matches( "(\\d+((,\\d+)*|,*))+", list ) ) // one number and 0-n numbers with only 1 comma seperated, multiple comma at the end allowed
 			return true;
 		else
@@ -40,19 +42,19 @@ public class ApiUtils {
 
 	public static boolean isValidGameQueueType( String queueTypes ) throws IllegalApiParameterException{
 		queueTypes.toUpperCase().trim();
-	if ( Arrays.asList(gameQueueType).contains(queueTypes) )
-		return true;
-	else
-		throw new IllegalApiParameterException(queueTypes + " is not a valid game queue type.");		
+		
+		if ( Arrays.asList(gameQueueType).contains(queueTypes) )
+			return true;
+		else
+			throw new IllegalApiParameterException(queueTypes + " is not a valid game queue type.");		
 	}
 	
 	public static boolean isValidSeason( String season ) throws IllegalApiParameterException{
 		season.toUpperCase().trim();
-	
+		
 		if ( season.equals("SEASON3") ){
 			return true;
 		}
-		
 		for (int i=2014; i <= currentYear; i++ ){ //only seasons from 2014 -> current year are valid
 			if ( season.equals("SEASON" + i) ){
 				return true;
@@ -63,10 +65,11 @@ public class ApiUtils {
 	
 	public static boolean isValidPlatformID( String platformId ) throws IllegalApiParameterException{
 		platformId.toUpperCase().trim();
-	if ( Arrays.asList(platformID).contains(platformId) )
-		return true;
-	else
-		throw new IllegalApiParameterException(platformId + " is not a valid platform ID.");		
+		
+		if ( Arrays.asList(platformID).contains(platformId) )
+			return true;
+		else
+			throw new IllegalApiParameterException(platformId + " is not a valid platform ID.");		
 	}
 	
 
