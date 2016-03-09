@@ -102,7 +102,6 @@ public abstract class RiotAPI {
 			responseCode = conn.getResponseCode();
 
 			System.out.println("DEBUG : Sending 'GET' request to URL : " + obj.toString());
-			System.out.println("DEBUG : Response Code : " + responseCode);
 			
 			if (responseCode != 200){
 				throw new ResponseErrorException(responseCode);

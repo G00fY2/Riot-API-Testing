@@ -2,6 +2,7 @@ package com.g00fy2.riotapi;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +15,24 @@ import com.g00fy2.riotapi.pojo.league.League;
 import com.g00fy2.riotapi.pojo.stats.*;
 import com.g00fy2.riotapi.pojo.summoner.*;
 import com.g00fy2.riotapi.api.*;
+import com.g00fy2.riotapi.exception.ApiException;
 
 
 public class MainClass {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws ApiException {
 
 		String apiFile = "D:\\workspace\\apikey.txt";
 		String apiKey = "";
 
-		// read API Key from first line of local textfile (temporary solution)
-		BufferedReader br = new BufferedReader(new FileReader(apiFile));
-		apiKey = br.readLine();
-		br.close();
+		// read API Key from first line of local textfile (temporary workaround)
+		try ( BufferedReader br = new BufferedReader(new FileReader(apiFile)) ) 
+		{
+			apiKey = br.readLine();
+		}
+		catch (IOException e){
+			//do nothing
+		}
 		
 		Map<String, String> apiValues = new HashMap<String, String>();	
 		apiValues.put("urlHost", ".api.pvp.net");
@@ -104,7 +110,11 @@ public class MainClass {
 		long stopTime = System.currentTimeMillis();
 	    System.out.println("EXECUTION TIME: " + (stopTime - startTime) + " msec");
 		
-		Thread.sleep(10000); // temporary workaround to avoid API rate limit
+		try {
+			Thread.sleep(10000);	// temporary workaround to avoid API rate limit
+		} catch (InterruptedException e) {
+			// do nothing
+		} 
 		
 		Map<String, List<League>> leagueEntry = leagueAPI.getLeagueSingleEntry("22573844");
 		System.out.println(leagueEntry.get("22573844").get(0).entries.get(0).leaguePoints);

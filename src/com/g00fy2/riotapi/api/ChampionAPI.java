@@ -27,7 +27,7 @@ public class ChampionAPI extends RiotAPI {
 	public List<Champion> getChampions(Boolean f2p) throws ApiException {
 		Class<Champions> classOf =  Champions.class;
 		String urlPath = buildUrlPath();
-		String urlQuery = "freeToPlay="+f2p.toString() + "&" + getUrlQuery();
+		String urlQuery = "freeToPlay=" + f2p.toString() + "&" + getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, classOf).champions;
 	}
