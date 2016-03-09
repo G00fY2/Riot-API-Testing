@@ -15,10 +15,10 @@ public class StatsAPI extends RiotAPI{
 		super(apiValues, apiVersion, apiCategory);
 	}
 
-	public ChampionsStats getRanked(long summonerID, int season) throws ApiException{			
+	public ChampionsStats getRanked(long summonerID, String season) throws ApiException{			
 		Class<ChampionsStats> classOf = ChampionsStats.class;
 		String urlPath = buildUrlPath() + Long.toString(summonerID) +"/ranked";
-		String urlQuery = "season=SEASON" + season + "&" + getUrlQuery();
+		String urlQuery = "season=" + ApiUtils.validSeason(season) + "&" + getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, classOf);
 	}
@@ -26,8 +26,7 @@ public class StatsAPI extends RiotAPI{
 	public PlayerStatSummaries getSummary(long summonerID, String season) throws ApiException{			
 		Class<PlayerStatSummaries> classOf = PlayerStatSummaries.class;
 		String urlPath = buildUrlPath() + Long.toString(summonerID) + "/summary";
-		ApiUtils.isValidSeason(season);
-		String urlQuery = "season=" + season + "&" + getUrlQuery();
+		String urlQuery = "season=" + ApiUtils.validSeason(season) + "&" + getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, classOf);
 	}

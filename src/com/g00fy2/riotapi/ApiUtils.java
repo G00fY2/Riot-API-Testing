@@ -2,75 +2,107 @@ package com.g00fy2.riotapi;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.g00fy2.riotapi.exception.IllegalApiParameterException;
 
 public class ApiUtils {
-	public static final String[] regions = new String[] {"br","eune","euw","kr","lan","las","na","oce","ru","tr"};
-	public static final String[] gameQueueType = new String[] {"RANKED_SOLO_5x5","RANKED_TEAM_3x3","RANKED_TEAM_5x5"};
-	public static final String[] platformID = new String[] {"BR1","EUN1","EUW1","KR","LA1","LA2","NA1","OC1","RU","TR1"};
-	public static final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+	private static final String[] regions = new String[] {"br","eune","euw","kr","lan","las","na","oce","ru","tr"};
+	private static final String[] gameQueueType = new String[] {"RANKED_SOLO_5x5","RANKED_TEAM_3x3","RANKED_TEAM_5x5"};
+	private static final String[] platformID = new String[] {"BR1","EUN1","EUW1","KR","LA1","LA2","NA1","OC1","RU","TR1"};
+	private static final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+	private static final Map<Integer, String> httpErrors = new HashMap<Integer, String>();
+	static {	// "static initializer"
+		httpErrors.put(400,	"Bad request");
+		httpErrors.put(401,	"Unauthorized");
+		httpErrors.put(403,	"Forbidden");
+		httpErrors.put(404,	"Not Found");
+		httpErrors.put(429,	"Rate limit exceeded");
+		httpErrors.put(500,	"Internal server error");
+		httpErrors.put(503,	"Service unavailable");
+	}
 	
 	
-	public static boolean isValidRegion( String region ) throws IllegalApiParameterException{
+	public static String validRegion( String region ) throws IllegalApiParameterException{
 		region.toLowerCase().trim();
 		
 		if ( Arrays.asList(regions).contains(region) )
-			return true;
+			return region;
 		else
 			throw new IllegalApiParameterException(region + " is not a valid region.");		
 	}
 	
-	public static boolean isValidGameType( String gameType ) throws IllegalApiParameterException{
-		gameType.toLowerCase().trim();
-		
-		if ( Arrays.asList(regions).contains(gameType) )
-			return true;
-		else
-			throw new IllegalApiParameterException(gameType + " is not a valid game type.");		
-	}
 	
-	public static boolean isCommaSeparatedIntegerList( String list ) throws IllegalApiParameterException{
+	public static String commaSeparatedIntegerList( String list, final int maxValues ) throws IllegalApiParameterException{
 		list.replaceAll("\\s+","");
+		int count = 0;
+		Pattern pattern = Pattern.compile("(\\d+((,\\d+)*|,*))+"); // one number and 0-n numbers with only 1 comma seperated, multiple comma at the end allowed
+		Matcher  matcher = pattern.matcher(list);
 		
-		if ( Pattern.matches( "(\\d+((,\\d+)*|,*))+", list ) ) // one number and 0-n numbers with only 1 comma seperated, multiple comma at the end allowed
-			return true;
+		if ( matcher.matches() ) {	// is string a comma-separated list of numbers 		
+			pattern = Pattern.compile("(\\d+|\\d+,)");
+			matcher = pattern.matcher(list);	
+			
+			while ( matcher.find() ) {	// if string is comma-separated list count number of values 
+				count++;
+			}
+			if (count > maxValues) {
+				throw new IllegalApiParameterException(list + " Maximum " + maxValues + " values limit exceeded (" + count + ")" );
+			}
+			
+			return list;
+		}
 		else
 			throw new IllegalApiParameterException(list + " is not a Comma-separated list.");		
 	}
 
-	public static boolean isValidGameQueueType( String queueTypes ) throws IllegalApiParameterException{
+	
+	public static String validGameQueueType( String queueTypes ) throws IllegalApiParameterException{
 		queueTypes.toUpperCase().trim();
 		
 		if ( Arrays.asList(gameQueueType).contains(queueTypes) )
-			return true;
+			return queueTypes;
 		else
 			throw new IllegalApiParameterException(queueTypes + " is not a valid game queue type.");		
 	}
 	
-	public static boolean isValidSeason( String season ) throws IllegalApiParameterException{
+	
+	public static String validSeason( String season ) throws IllegalApiParameterException{
 		season.toUpperCase().trim();
 		
 		if ( season.equals("SEASON3") ){
-			return true;
+			return season;
 		}
 		for (int i=2014; i <= currentYear; i++ ){ //only seasons from 2014 -> current year are valid
 			if ( season.equals("SEASON" + i) ){
-				return true;
+				return season;
 			}
 		}
 		throw new IllegalApiParameterException(season + " is not a valid season.");		
 	}
 	
-	public static boolean isValidPlatformID( String platformId ) throws IllegalApiParameterException{
+	
+	public static String validPlatformID( String platformId ) throws IllegalApiParameterException{
 		platformId.toUpperCase().trim();
 		
 		if ( Arrays.asList(platformID).contains(platformId) )
-			return true;
+			return platformId;
 		else
 			throw new IllegalApiParameterException(platformId + " is not a valid platform ID.");		
 	}
 	
+	
+	public static String getHttpError( int code ){
+		String reason = "Unkown";
+				
+		if (httpErrors.get(code) != null){
+			reason = httpErrors.get(code);
+		}
+				
+		return reason;		
+	}
 
 }

@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.g00fy2.riotapi.ApiUtils;
 import com.g00fy2.riotapi.exception.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -27,7 +28,6 @@ public abstract class RiotAPI {
 	private String apiVersion;
 	private String apiCategory;
 	private Gson gson;
-	final String[] regions = new String[] {"br","eune","euw","kr","lan","las","na","oce","ru","tr"};
 
 	public RiotAPI(final Map<String, String> apiValues, final String apiVersion, final String apiCategory) throws ApiException{
 		urlHost = apiValues.get("urlHost");
@@ -46,7 +46,6 @@ public abstract class RiotAPI {
 		try ( BufferedReader reader = new BufferedReader( new InputStreamReader(conn.getInputStream() ) ) )
 		{
 			T object = gson.fromJson(reader, classOf);
-			System.out.println("DEBUG : JSON deserialization succeeded");
 				
 			return object;			
 		}
@@ -72,7 +71,6 @@ public abstract class RiotAPI {
 		try ( BufferedReader reader = new BufferedReader( new InputStreamReader(conn.getInputStream() ) ) )
 		{
 			T object = gson.fromJson(reader, typeOf);
-			System.out.println("DEBUG : JSON deserialization succeeded");
 				
 			return object;			
 		}
@@ -128,11 +126,7 @@ public abstract class RiotAPI {
 	
 	
 	public void setRegion(String region) throws IllegalApiParameterException{
-		region.trim().toLowerCase();
-		if ( !(Arrays.asList(regions).contains(region)) ){
-			throw new IllegalApiParameterException("Unkown API region.");		
-		}
-		else this.region = region;
+		this.region = ApiUtils.validRegion(region);
 	}	
 	
 	protected String buildUrlPath(){

@@ -30,7 +30,7 @@ public class SummonerAPI extends RiotAPI {
 	// Get summoner objects mapped by summoner ID for a given list of summoner IDs
 	public Map<Integer, SummonersBy> getSummonersByIDs(String summonerIDs) throws ApiException {
 		Type typeOf = new TypeToken<Map<Integer, SummonersBy>>(){}.getType();
-		String urlPath = buildUrlPath() + "/" + summonerIDs;
+		String urlPath = buildUrlPath() + "/" + ApiUtils.commaSeparatedIntegerList(summonerIDs, 40);
 		String urlQuery = getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
@@ -39,7 +39,7 @@ public class SummonerAPI extends RiotAPI {
 	// Get mastery pages mapped by summoner ID for a given list of summoner IDs
 	public Map<String, MasteryPages> getSummonersMasteries(String summonerIDs) throws ApiException {
 		Type typeOf = new TypeToken<Map<String, MasteryPages>>(){}.getType();
-		String urlPath = buildUrlPath() + "/" + summonerIDs + "/masteries";
+		String urlPath = buildUrlPath() + "/" + ApiUtils.commaSeparatedIntegerList(summonerIDs, 40) + "/masteries";
 		String urlQuery = getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
@@ -48,7 +48,7 @@ public class SummonerAPI extends RiotAPI {
 	// Get summoner names mapped by summoner ID for a given list of summoner IDs
 	public Map<String, String> getSummonersNames(String summonerIDs) throws ApiException {
 		Type typeOf = new TypeToken<Map<String, String>>(){}.getType();
-		String urlPath = buildUrlPath() + "/" + summonerIDs;
+		String urlPath = buildUrlPath() + "/" + ApiUtils.commaSeparatedIntegerList(summonerIDs, 40);
 		String urlQuery = getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
@@ -56,9 +56,8 @@ public class SummonerAPI extends RiotAPI {
 
 	// Get rune pages mapped by summoner ID for a given list of summoner IDs
 	public Map<String, RunePages> getSummonersRunes(String summonerIDs) throws ApiException {
-		ApiUtils.isCommaSeparatedIntegerList(summonerIDs);
 		Type typeOf = new TypeToken<Map<String, RunePages>>(){}.getType();
-		String urlPath = buildUrlPath() + "/" + summonerIDs + "/runes";
+		String urlPath = buildUrlPath() + "/" + ApiUtils.commaSeparatedIntegerList(summonerIDs, 40) + "/runes";
 		String urlQuery = getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);

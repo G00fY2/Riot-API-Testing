@@ -1,19 +1,17 @@
 package com.g00fy2.riotapi.exception;
 
-public class ResponseErrorException extends ApiException {
+import com.g00fy2.riotapi.ApiUtils;
 
-	public ResponseErrorException(String message)
-	{
-		super(message);
-	}
-	
-	public ResponseErrorException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+public class ResponseErrorException extends ApiException {
+	private int statusCode;
 	
 	public ResponseErrorException(int responseCode)
 	{
-		super("Status " + responseCode +" <- HTTP Error responded.");
+		super(ApiUtils.getHttpError(responseCode));
+		statusCode = responseCode;
+	}
+	
+	public int getStatus(){
+		return statusCode;
 	}
 }

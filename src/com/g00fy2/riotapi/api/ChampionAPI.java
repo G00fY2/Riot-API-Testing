@@ -23,6 +23,14 @@ public class ChampionAPI extends RiotAPI {
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, classOf).champions;
 	}
+	// Retrieve all champions
+	public List<Champion> getChampions(Boolean f2p) throws ApiException {
+		Class<Champions> classOf =  Champions.class;
+		String urlPath = buildUrlPath();
+		String urlQuery = "freeToPlay="+f2p.toString() + "&" + getUrlQuery();
+		
+		return getObjectFromJsonUrl(urlPath, urlQuery, classOf).champions;
+	}
 
 	// Retrieve champion by ID
 	public Champion getChampionByID(int championID) throws ApiException {

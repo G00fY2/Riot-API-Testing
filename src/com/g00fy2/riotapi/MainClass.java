@@ -63,6 +63,9 @@ public class MainClass {
 		System.out.println("- - - - -ChampionAPI-Champions- - - - -");
 		List<Champion> champions = champAPI.getChampions();
 		System.out.println(champions.get(0).id);
+		System.out.println("- - - - -ChampionAPI-Champions- - - - -");
+		List<Champion> f2pChampions = champAPI.getChampions(true);
+		System.out.println(f2pChampions.get(0).id);
 		System.out.println("- - - - -ChampionAPI-ChampionByID- - - - -");
 		Champion champion = champAPI.getChampionByID(2);
 		System.out.println(champion.freeToPlay.toString());
@@ -82,7 +85,7 @@ public class MainClass {
 		StatsAPI statsAPI = new StatsAPI(apiValues);
 		
 		System.out.println("- - - - -StatsAPI-Ranked- - - -");
-		ChampionsStats championStats = statsAPI.getRanked(22573844, 4);
+		ChampionsStats championStats = statsAPI.getRanked(22573844, "SEASON2016");
 		System.out.println(championStats.champions.get(0).stats.totalDamageDealt);
 		System.out.println("- - - - -StatsAPI-Summary- - - -");
 		PlayerStatSummaries playerStats = statsAPI.getSummary(22573844, "SEASON2016");
@@ -97,14 +100,14 @@ public class MainClass {
 		Map<String, List<League>> league = leagueAPI.getLeague("22573844");
 		System.out.println(league.get("22573844").get(0).entries.get(21).playerOrTeamName);
 		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
-		Map<String, List<League>> leagueEntry = leagueAPI.getLeagueSingleEntry("22573844");
-		System.out.println(leagueEntry.get("22573844").get(0).entries.get(0).leaguePoints);
 		
 		long stopTime = System.currentTimeMillis();
 	    System.out.println("EXECUTION TIME: " + (stopTime - startTime) + " msec");
 		
 		Thread.sleep(10000); // temporary workaround to avoid API rate limit
-
+		
+		Map<String, List<League>> leagueEntry = leagueAPI.getLeagueSingleEntry("22573844");
+		System.out.println(leagueEntry.get("22573844").get(0).entries.get(0).leaguePoints);
 		System.out.println("- - - - -LaegueAPI-SingleEntry-- - - -");
 		League leagueChallegner = leagueAPI.getLeagueChallenger("RANKED_SOLO_5x5");
 		System.out.println(leagueChallegner.name);	
