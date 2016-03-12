@@ -123,14 +123,13 @@ public abstract class RiotAPI {
 		}
 	}
 	
+	protected String buildUrlPath(){
+		return urlPath + region + apiVersion + apiCategory;
+	}
 	
 	public void setRegion(String region) throws IllegalApiParameterException{
 		this.region = ApiUtils.validRegion(region);
 	}	
-	
-	protected String buildUrlPath(){
-		return urlPath + region + apiVersion + apiCategory;
-	}
 	
 	public String getRegion(){
 		return region;

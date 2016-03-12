@@ -26,16 +26,6 @@ public class ApiUtils {
 	}
 	
 	
-	public static String validRegion( String region ) throws IllegalApiParameterException{
-		region.toLowerCase().trim();
-		
-		if ( Arrays.asList(regions).contains(region) )
-			return region;
-		else
-			throw new IllegalApiParameterException(region + " is not a valid region.");		
-	}
-	
-	
 	public static String commaSeparatedIntegerList( String list, final int maxValues ) throws IllegalApiParameterException{
 		list.replaceAll("\\s+","");
 		int count = 0;
@@ -58,7 +48,7 @@ public class ApiUtils {
 		else
 			throw new IllegalApiParameterException(list + " is not a Comma-separated list.");		
 	}
-
+	
 	
 	public static String validGameQueueType( String queueTypes ) throws IllegalApiParameterException{
 		queueTypes.toUpperCase().trim();
@@ -67,6 +57,26 @@ public class ApiUtils {
 			return queueTypes;
 		else
 			throw new IllegalApiParameterException(queueTypes + " is not a valid game queue type.");		
+	}
+	
+	
+	public static String validPlatformID( String platformId ) throws IllegalApiParameterException{
+		platformId.toUpperCase().trim();
+		
+		if ( Arrays.asList(platformID).contains(platformId) )
+			return platformId;
+		else
+			throw new IllegalApiParameterException(platformId + " is not a valid platform ID.");		
+	}
+	
+	
+	public static String validRegion( String region ) throws IllegalApiParameterException{
+		region.toLowerCase().trim();
+		
+		if ( Arrays.asList(regions).contains(region) )
+			return region;
+		else
+			throw new IllegalApiParameterException(region + " is not a valid region.");		
 	}
 	
 	
@@ -85,16 +95,6 @@ public class ApiUtils {
 	}
 	
 	
-	public static String validPlatformID( String platformId ) throws IllegalApiParameterException{
-		platformId.toUpperCase().trim();
-		
-		if ( Arrays.asList(platformID).contains(platformId) )
-			return platformId;
-		else
-			throw new IllegalApiParameterException(platformId + " is not a valid platform ID.");		
-	}
-	
-	
 	public static String getHttpError( int code ){
 		String reason = "Unkown";
 				
@@ -104,5 +104,6 @@ public class ApiUtils {
 				
 		return reason;		
 	}
+	
 
 }
