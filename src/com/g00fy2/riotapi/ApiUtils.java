@@ -26,17 +26,20 @@ public class ApiUtils {
 	}
 	
 	
-	public static String commaSeparatedIntegerList( String list, final int maxValues ) throws IllegalApiParameterException{
-		list.replaceAll("\\s+","");
+	public static String commaSeparatedIntegerList( String list, int maxValues ) throws IllegalApiParameterException{
+		if (list.isEmpty() || list == null)
+			throw new IllegalApiParameterException("No comma-separated list.");	
+		
+		list = list.replaceAll("\\s+","");
 		int count = 0;
 		Pattern pattern = Pattern.compile("(\\d+((,\\d+)*|,*))+"); // one number and 0-n numbers with only 1 comma seperated, multiple comma at the end allowed
-		Matcher  matcher = pattern.matcher(list);
+		Matcher matcher = pattern.matcher(list);
 		
 		if ( matcher.matches() ) {	// is string a comma-separated list of numbers 		
 			pattern = Pattern.compile("(\\d+|\\d+,)");
 			matcher = pattern.matcher(list);	
 			
-			while ( matcher.find() ) {	// if string is comma-separated list count number of values 
+			while ( matcher.find() ) {	// count number of values 
 				count++;
 			}
 			if (count > maxValues) {
@@ -46,12 +49,39 @@ public class ApiUtils {
 			return list;
 		}
 		else
-			throw new IllegalApiParameterException(list + " is not a Comma-separated list.");		
+			throw new IllegalApiParameterException(list + " is not a comma-separated list.");		
+	}
+	
+	
+	public static String commaSeparatedNameList( String list, int maxValues ) throws IllegalApiParameterException{
+		if (list.isEmpty() || list == null)
+			throw new IllegalApiParameterException("No comma-separated list.");
+
+		list = list.replaceAll("\\s+","");
+		int count = 0;
+		Pattern pattern = Pattern.compile("([\\w._°]{3,16}+((,[\\w._°]{3,16}+)*|,*))+", Pattern.UNICODE_CHARACTER_CLASS); // 3-16 characters, multiple comma at the end allowed
+		Matcher matcher = pattern.matcher(list);
+		
+		if ( matcher.matches() ) {	// is string a comma-separated list of word characters
+			pattern = Pattern.compile("([\\w._°]{3,16}+|[\\w._°]{3,16},)", Pattern.UNICODE_CHARACTER_CLASS);
+			matcher = pattern.matcher(list);	
+			
+			while ( matcher.find() ) {	// count number of values 
+				count++;
+			}
+			if (count > maxValues) {
+				throw new IllegalApiParameterException(list + " maximum " + maxValues + " values limit exceeded (" + count + ")" );
+			}
+			
+			return list;
+		}
+		else
+			throw new IllegalApiParameterException(list + " is not a comma-separated list.");		
 	}
 	
 	
 	public static String validGameQueueType( String queueTypes ) throws IllegalApiParameterException{
-		queueTypes.toUpperCase().trim();
+		queueTypes = queueTypes.toUpperCase().trim();
 		
 		if ( Arrays.asList(gameQueueType).contains(queueTypes) )
 			return queueTypes;
@@ -61,7 +91,7 @@ public class ApiUtils {
 	
 	
 	public static String validPlatformID( String platformId ) throws IllegalApiParameterException{
-		platformId.toUpperCase().trim();
+		platformId = platformId.toUpperCase().trim();
 		
 		if ( Arrays.asList(platformID).contains(platformId) )
 			return platformId;
@@ -71,7 +101,7 @@ public class ApiUtils {
 	
 	
 	public static String validRegion( String region ) throws IllegalApiParameterException{
-		region.toLowerCase().trim();
+		region = region.toLowerCase().trim();
 		
 		if ( Arrays.asList(regions).contains(region) )
 			return region;
@@ -81,7 +111,7 @@ public class ApiUtils {
 	
 	
 	public static String validSeason( String season ) throws IllegalApiParameterException{
-		season.toUpperCase().trim();
+		season = season.toUpperCase().trim();
 		
 		if ( season.equals("SEASON3") ){
 			return season;

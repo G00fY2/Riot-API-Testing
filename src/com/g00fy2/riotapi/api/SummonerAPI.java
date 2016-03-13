@@ -21,7 +21,7 @@ public class SummonerAPI extends RiotAPI {
 	// Get summoner objects mapped by standardized summoner name for a given list of summoner names
 	public Map<String, SummonersBy> getSummonersByNames(String summonerNames) throws ApiException {
 		Type typeOf = new TypeToken<Map<String, SummonersBy>>(){}.getType();
-		String urlPath = buildUrlPath() + "/by-name/" + ((summonerNames.toLowerCase()).replaceAll("\\s", ""));
+		String urlPath = buildUrlPath() + "/by-name/" + ApiUtils.commaSeparatedNameList(summonerNames, 40);
 		String urlQuery = getUrlQuery();
 		
 		return getObjectFromJsonUrl(urlPath, urlQuery, typeOf);
