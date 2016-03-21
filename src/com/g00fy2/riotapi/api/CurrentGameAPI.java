@@ -15,7 +15,7 @@ public class CurrentGameAPI extends RiotAPI {
 		super(apiValues, apiVersion, apiCategory);
 	}
 
-	// Retrieve all champions
+	
 	public CurrentGameInfo getCurrentGameInfo(String platformId, long summonerId) throws ApiException {
 		Class<CurrentGameInfo> classOf =  CurrentGameInfo.class;
 		String urlPath = apiCategory + "/" + ApiUtils.validPlatformID(platformId) + "/" + Long.toString(summonerId);
