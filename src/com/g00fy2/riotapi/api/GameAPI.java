@@ -15,7 +15,6 @@ public class GameAPI extends RiotAPI{
 		super(apiValues, apiVersion, apiCategory);
 	}
 
-	// return a object List with all champions
 	public Set<Game> getGames(long summonerID) throws ApiException{			
 		Class<Games> classOf = Games.class;
 		String urlPath = buildUrlPath() + Long.toString(summonerID) + "/recent";

@@ -27,7 +27,7 @@ public class ApiUtils {
 	
 	
 	public static String commaSeparatedIntegerList( String list, int maxValues ) throws IllegalApiParameterException{
-		if (list.isEmpty() || list == null)
+		if (list == null || list.isEmpty())
 			throw new IllegalApiParameterException("No comma-separated list.");	
 		
 		list = list.replaceAll("\\s+","");
@@ -54,7 +54,7 @@ public class ApiUtils {
 	
 	
 	public static String commaSeparatedNameList( String list, int maxValues ) throws IllegalApiParameterException{
-		if (list.isEmpty() || list == null)
+		if (list == null || list.isEmpty())
 			throw new IllegalApiParameterException("No comma-separated list.");
 
 		list = list.replaceAll("\\s+","");
@@ -80,13 +80,13 @@ public class ApiUtils {
 	}
 	
 	
-	public static String validGameQueueType( String queueTypes ) throws IllegalApiParameterException{
-		queueTypes = queueTypes.toUpperCase().trim();
+	public static String validGameQueueType( String queueType ) throws IllegalApiParameterException{
+		queueType = queueType.trim();
 		
-		if ( Arrays.asList(gameQueueType).contains(queueTypes) )
-			return queueTypes;
+		if ( Arrays.asList(gameQueueType).contains(queueType) )
+			return queueType;
 		else
-			throw new IllegalApiParameterException(queueTypes + " is not a valid game queue type.");		
+			throw new IllegalApiParameterException(queueType + " is not a valid game queue type.");		
 	}
 	
 	

@@ -34,7 +34,7 @@ public class MainClass {
 			//do nothing
 		}
 		
-		Map<String, String> apiValues = new HashMap<String, String>();	
+		Map<String, String> apiValues = new HashMap<>();	
 		apiValues.put("urlHost", ".api.pvp.net");
 		apiValues.put("urlPath", "/api/lol/");
 		apiValues.put("apiKey", apiKey);
